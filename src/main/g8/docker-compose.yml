@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  $name;format="normalize"$:
+    build: .
+    ports:
+      - 5005:5005
+    volumes:
+      - "~/.sbt:/root/.sbt"
+      - "~/.ivy2:/root/.ivy2"
+      - ".:/opt/$name;format="normalize"$"
+      - "/opt/$name;format="normalize"$/target"
+      - "/opt/$name;format="normalize"$/project/target"

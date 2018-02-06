@@ -17,3 +17,5 @@ coverageEnabled := true
 
 testOptions in Test +=
   Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-results")
+
+addCommandAlias("testWithCoverage", "; clean; test; coverageReport")

@@ -10,9 +10,15 @@ RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.lis
 
 WORKDIR /opt/$name;format="normalize"$
 
-EXPOSE 5005
-
 COPY . .
+
+#RUN sbt assembly
+#
+#ENTRYPOINT ["java"]
+#
+#CMD ["-jar", "target/scala-2.12/$name;format="normalize"$-assembly.jar"]
+
+EXPOSE 5005
 
 ENTRYPOINT ["sbt"]
 

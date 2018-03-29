@@ -6,13 +6,14 @@ lazy val root = (project in file("."))
       organization := "com.ruchij",
       scalaVersion := "2.12.5"
     )),
-    name := "$name$",
+    name := "$name;format="normalize"$",
     libraryDependencies ++= Seq(
       scalaTest % Test,
       pegdown % Test
     ),
     buildInfoKeys := BuildInfoKey.ofN(name, scalaVersion, sbtVersion),
-    buildInfoPackage := "com.eed3si9n.ruchij"
+    buildInfoPackage := "com.eed3si9n.ruchij",
+    assemblyJarName in assembly := "$name;format="normalize"$-assembly.jar"
   )
 
 enablePlugins(BuildInfoPlugin)

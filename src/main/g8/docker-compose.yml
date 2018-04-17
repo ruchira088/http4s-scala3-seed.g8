@@ -12,3 +12,4 @@ services:
       - ".:/opt/$name;format="normalize"$"
       - "/opt/$name;format="normalize"$/target"
       - "/opt/$name;format="normalize"$/project/target"
+      - "/root/.sbt/1.0/plugins"

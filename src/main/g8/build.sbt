@@ -18,9 +18,7 @@ lazy val root = (project in file("."))
 
 enablePlugins(BuildInfoPlugin)
 
-coverageEnabled := true
-
 testOptions in Test +=
   Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-results")
 
-addCommandAlias("testWithCoverage", "; clean; test; coverageReport")
+addCommandAlias("testWithCoverage", "; clean; coverage; test; coverageReport")

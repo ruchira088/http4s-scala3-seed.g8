@@ -4,6 +4,7 @@ jobs:
   build:
     docker:
       - image: openjdk:8
+    working_directory: ~/project
     steps:
       - run:
           name: Install sbt
@@ -21,17 +22,25 @@ jobs:
       - run:
           name: Create a new sbt project from the g8 template
           command: sbt g8
+  test:
+    docker:
+      - image: openjdk:8
+    working_dir: ~/project/target/g8
+    steps:
       - run:
           name: Run the test suite of the newly created project
-          command: |
-            currentPath=$PWD
-
-            cd target/g8
-            sbt test
-
-            cd $PWD
+          command: sbt clean test
       - save_cache:
           key: sbt-cache
           paths:
             - "~/.ivy2"
             - "~/.sbt"
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

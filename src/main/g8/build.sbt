@@ -7,7 +7,7 @@ lazy val root =
       name := "$name;format="normalize"$",
       organization := "com.ruchij",
       scalaVersion := SCALA_VERSION,
-      libraryDependencies ++= rootDependencies ++ rootTestDependencies,
+      libraryDependencies ++= rootDependencies ++ rootTestDependencies.map(_ % Test),
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
       buildInfoPackage := "com.eed3si9n.ruchij",
       assemblyJarName in assembly := "$name;format="normalize"$-assembly.jar",

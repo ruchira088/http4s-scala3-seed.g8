@@ -10,7 +10,7 @@ lazy val root =
       libraryDependencies ++= rootDependencies ++ rootTestDependencies.map(_ % Test),
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
       buildInfoPackage := "com.eed3si9n.ruchij",
-      assemblyJarName in assembly := "$name;format="normalize"$-assembly.jar",
+      assemblyJarName in assembly := "$name;format="normalize"$.jar",
       testOptions in Test +=
         Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-results")
     )

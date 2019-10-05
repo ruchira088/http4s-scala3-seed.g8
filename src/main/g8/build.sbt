@@ -10,9 +10,7 @@ lazy val root =
       maintainer := "me@ruchij.com",
       libraryDependencies ++= rootDependencies ++ rootTestDependencies.map(_ % Test),
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
-      buildInfoPackage := "com.eed3si9n.ruchij",
-      testOptions in Test +=
-        Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-results")
+      buildInfoPackage := "com.eed3si9n.ruchij"
     )
 
 lazy val rootDependencies =

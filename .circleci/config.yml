@@ -27,8 +27,8 @@ jobs:
       - save_cache:
           key: sbt-cache
           paths:
-            - "~/.ivy2"
-            - "~/.sbt"
+            - ~/.sbt
+            - ~/.coursier
 
 workflows:
   version: 2

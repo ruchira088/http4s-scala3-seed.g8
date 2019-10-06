@@ -8,7 +8,7 @@ services:
       - 5005:5005
     volumes:
       - "~/.sbt:/root/.sbt"
-      - "~/.ivy2:/root/.ivy2"
+      - "~/.coursier:/root/.coursier"
       - ".:/opt/$name;format="normalize"$"
       - "/opt/$name;format="normalize"$/target"
       - "/opt/$name;format="normalize"$/project/target"

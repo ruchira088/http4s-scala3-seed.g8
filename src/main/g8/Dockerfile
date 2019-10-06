@@ -12,14 +12,8 @@ WORKDIR /opt/$name;format="normalize"$
 
 COPY . .
 
-#RUN sbt assembly
-#
-#ENTRYPOINT ["java"]
-#
-#CMD ["-jar", "target/scala-2.12/$name;format="normalize"$-assembly.jar"]
-
 EXPOSE 5005
 
 ENTRYPOINT ["sbt"]
 
-CMD ["-jvm-debug", "5005", "run"]
+CMD ["run"]

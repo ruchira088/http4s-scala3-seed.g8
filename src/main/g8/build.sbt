@@ -11,7 +11,8 @@ lazy val root =
       libraryDependencies ++= rootDependencies ++ rootTestDependencies.map(_ % Test),
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
       buildInfoPackage := "com.eed3si9n.ruchij",
-      scalacOptions ++= Seq("-Xlint")
+      scalacOptions ++= Seq("-Xlint"),
+      addCompilerPlugin(kindProjector)
     )
 
 lazy val rootDependencies =

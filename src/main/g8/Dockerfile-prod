@@ -1,0 +1,19 @@
+FROM ubuntu:18.04 as builder
+
+WORKDIR /opt
+
+RUN apt update && \
+    apt install unzip -y
+
+COPY target/universal .
+
+RUN unzip $name;format="normalize"$-*.zip -d build && \
+    mv build/$name;format="normalize"$-* $name;format="normalize"$
+
+FROM openjdk:8-jdk-slim
+
+WORKDIR /opt/$name;format="normalize"$
+
+COPY --from=builder /opt/$name;format="normalize"$ .
+
+CMD [ "/opt/$name;format="normalize"$/bin/$name;format="normalize"$" ]

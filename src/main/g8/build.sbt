@@ -13,11 +13,23 @@ lazy val root =
       buildInfoPackage := "com.eed3si9n.ruchij",
       topLevelDirectory := None,
       scalacOptions ++= Seq("-Xlint"),
-      addCompilerPlugin(kindProjector)
-    )
+      addCompilerPlugin(kindProjector),
+      addCompilerPlugin(betterMonadicFor)
+)
 
 lazy val rootDependencies =
-  Seq()
+  Seq(
+    http4sDsl,
+    http4sBlazeServer,
+    http4sCirce,
+    circeGeneric,
+    circeParser,
+    circeLiteral,
+    jawnFs2,
+    jodaTime,
+    pureconfig,
+    logbackClassic
+  )
 
 lazy val rootTestDependencies =
   Seq(scalaTest, pegdown)

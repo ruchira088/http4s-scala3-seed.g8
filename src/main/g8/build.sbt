@@ -5,6 +5,7 @@ lazy val root =
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
       name := "$name;format="normalize"$",
+      version := "0.0.1",
       organization := "com.ruchij",
       scalaVersion := SCALA_VERSION,
       maintainer := "me@ruchij.com",

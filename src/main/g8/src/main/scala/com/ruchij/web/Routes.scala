@@ -25,7 +25,7 @@ object Routes {
       Kleisli[F, Request[F], Response[F]] {
         request =>
           routes.run(request).getOrElseF {
-            Sync[F].raiseError(ResourceNotFoundException(s"Endpoint not found: ${request.method} ${request.uri}"))
+            Sync[F].raiseError(ResourceNotFoundException(s"Endpoint not found: request.method{request.uri}"))
           }
       }
     }

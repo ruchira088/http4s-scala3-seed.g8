@@ -29,8 +29,8 @@ class ServiceRoutesSpec extends FlatSpec with MustMatchers {
         "serviceName": "$name;format="normalize"$",
         "serviceVersion": "0.0.1",
         "organization": "com.ruchij",
-        "scalaVersion": \${BuildInfo.scalaVersion},
-        "sbtVersion": \${BuildInfo.sbtVersion},
+        "scalaVersion": "2.12.10",
+        "sbtVersion": "1.3.3",
         "javaVersion": \${Properties.javaVersion},
         "timestamp": \$dateTime
       }"""

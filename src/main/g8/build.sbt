@@ -26,7 +26,6 @@ lazy val rootDependencies =
     circeGeneric,
     circeParser,
     circeLiteral,
-    jawnFs2,
     jodaTime,
     pureconfig,
     logbackClassic

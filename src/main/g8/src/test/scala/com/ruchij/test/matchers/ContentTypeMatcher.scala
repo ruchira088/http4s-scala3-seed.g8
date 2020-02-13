@@ -4,8 +4,6 @@ import org.http4s.headers.`Content-Type`
 import org.http4s.{MediaType, Response}
 import org.scalatest.matchers.{MatchResult, Matcher}
 
-import scala.language.higherKinds
-
 class ContentTypeMatcher[F[_]](mediaType: MediaType) extends Matcher[Response[F]] {
   override def apply(response: Response[F]): MatchResult = {
     val contentType: Option[MediaType] = response.headers.get(`Content-Type`).map(_.mediaType)

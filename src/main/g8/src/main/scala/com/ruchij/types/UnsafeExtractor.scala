@@ -2,8 +2,6 @@ package com.ruchij.types
 
 import cats.effect.IO
 
-import scala.language.higherKinds
-
 trait UnsafeExtractor[M[_]] {
   def extract[A](value: M[A]): A
 }

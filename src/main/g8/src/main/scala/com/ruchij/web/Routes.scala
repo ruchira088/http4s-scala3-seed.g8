@@ -8,8 +8,6 @@ import org.http4s.{HttpApp, HttpRoutes}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 
-import scala.language.higherKinds
-
 object Routes {
   def apply[F[_]: Sync](healthService: HealthService[F]): HttpApp[F] = {
     implicit val dsl: Http4sDsl[F] = new Http4sDsl[F] {}

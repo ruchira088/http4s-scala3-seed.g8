@@ -7,8 +7,6 @@ import io.circe.Json
 import io.circe.parser.{parse => parseJson}
 import org.http4s.Response
 
-import scala.language.higherKinds
-
 object JsonUtils {
   def fromResponse[F[_]: Sync](response: Response[F])(implicit functionK: Either[Throwable, *] ~> F): F[Json] =
     response.bodyAsText.compile[F, F, String].string

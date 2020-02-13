@@ -8,8 +8,6 @@ import cats.implicits._
 import com.ruchij.services.health.models.ServiceInformation
 import org.joda.time.DateTime
 
-import scala.language.higherKinds
-
 class HealthServiceImpl[F[_]: Clock: Functor] extends HealthService[F] {
   override def serviceInformation(): F[ServiceInformation] =
     Clock[F].realTime(TimeUnit.MILLISECONDS)

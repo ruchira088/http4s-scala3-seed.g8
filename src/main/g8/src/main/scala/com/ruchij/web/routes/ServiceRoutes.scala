@@ -6,8 +6,6 @@ import com.ruchij.services.health.HealthService
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 
-import scala.language.higherKinds
-
 object ServiceRoutes {
   def apply[F[_]: Sync](healthService: HealthService[F])(implicit dsl: Http4sDsl[F]): HttpRoutes[F] = {
     import dsl._

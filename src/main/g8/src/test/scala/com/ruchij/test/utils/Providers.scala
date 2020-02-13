@@ -6,7 +6,7 @@ import cats.effect.{Clock, Sync}
 import org.joda.time.DateTime
 
 import scala.concurrent.duration.TimeUnit
-import scala.language.{higherKinds, implicitConversions}
+import scala.language.implicitConversions
 
 object Providers {
   implicit def clock[F[_]: Sync]: Clock[F] = stubClock(DateTime.now())

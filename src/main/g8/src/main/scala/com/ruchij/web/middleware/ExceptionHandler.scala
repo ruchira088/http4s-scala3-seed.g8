@@ -1,13 +1,13 @@
 package com.ruchij.web.middleware
 
+import cats.arrow.FunctionK
 import cats.data.Kleisli
 import cats.effect.Sync
 import com.ruchij.exceptions.ResourceNotFoundException
+import com.ruchij.types.FunctionKTypes
 import com.ruchij.web.responses.ErrorResponse
 import org.http4s.dsl.impl.EntityResponseGenerator
 import org.http4s.{HttpApp, Request, Response, Status}
-
-import scala.language.higherKinds
 
 object ExceptionHandler {
   def apply[F[_]: Sync](httpApp: HttpApp[F]): HttpApp[F] =
@@ -26,6 +26,8 @@ object ExceptionHandler {
 
           case _ => Status.InternalServerError
         }
+
+      override def liftG: FunctionK[F, F] = FunctionKTypes.identityFuctionK[F]
     }
 
   def errorResponseBody(throwable: Throwable): ErrorResponse =

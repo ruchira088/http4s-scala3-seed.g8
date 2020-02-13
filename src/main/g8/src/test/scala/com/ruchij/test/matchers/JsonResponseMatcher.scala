@@ -8,20 +8,15 @@ import io.circe.Json
 import org.http4s.Response
 import org.scalatest.matchers.{MatchResult, Matcher}
 
-import scala.language.higherKinds
-
-class JsonResponseMatcher[F[_] : Sync : UnsafeExtractor : Lambda[X[_] => Either[Throwable, *] ~> X]](expectedJson: Json) extends Matcher[Response[F]] {
+class JsonResponseMatcher[F[_]: Sync: UnsafeExtractor: Lambda[X[_] => Either[Throwable, *] ~> X]](expectedJson: Json)
+    extends Matcher[Response[F]] {
   override def apply(response: Response[F]): MatchResult = {
     val json: Json = UnsafeExtractor.extractUnsafely(JsonUtils.fromResponse(response))
 
-    MatchResult(
-      expectedJson == json,
-      s"""
+    MatchResult(expectedJson == json, s"""
         |Expected: \$expectedJson
         |
         |Actual: \$json
-        |""".stripMargin,
-      "JSON values are equal"
-    )
+        |""".stripMargin, "JSON values are equal")
   }
 }

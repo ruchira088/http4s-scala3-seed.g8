@@ -6,8 +6,6 @@ import io.circe.generic.auto._
 import org.http4s.EntityEncoder
 import org.http4s.circe.jsonEncoderOf
 
-import scala.language.higherKinds
-
 case class ErrorResponse(errorMessages: List[Throwable])
 
 object ErrorResponse {

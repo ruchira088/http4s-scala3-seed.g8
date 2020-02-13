@@ -8,7 +8,6 @@ import org.http4s.EntityEncoder
 import org.http4s.circe.jsonEncoderOf
 import org.joda.time.DateTime
 
-import scala.language.higherKinds
 import scala.util.Properties
 
 case class ServiceInformation(

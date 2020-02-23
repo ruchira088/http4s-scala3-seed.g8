@@ -28,7 +28,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.1.0"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.1.1"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }

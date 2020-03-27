@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val SCALA_VERSION = "2.13.1"
-  val HTTP4S_VERSION = "0.21.1"
+  val HTTP4S_VERSION = "0.21.2"
   val CIRCE_VERSION = "0.13.0"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % HTTP4S_VERSION
@@ -20,7 +20,7 @@ object Dependencies
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.10.5"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.12.2"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.12.3"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 

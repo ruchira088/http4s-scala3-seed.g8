@@ -15,7 +15,8 @@ lazy val root =
       topLevelDirectory := None,
       scalacOptions ++= Seq("-Xlint", "-feature"),
       addCompilerPlugin(kindProjector),
-      addCompilerPlugin(betterMonadicFor)
+      addCompilerPlugin(betterMonadicFor),
+      addCompilerPlugin(scalaTypedHoles)
 )
 
 lazy val rootDependencies =

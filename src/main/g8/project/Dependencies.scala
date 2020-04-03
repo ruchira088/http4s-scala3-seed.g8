@@ -26,6 +26,8 @@ object Dependencies
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full
 
+  lazy val scalaTypedHoles = "com.github.cb372" % "scala-typed-holes" % "0.1.2" cross CrossVersion.full
+
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.1.1"

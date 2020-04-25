@@ -18,7 +18,7 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CIRCE_VERSION
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.5"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.6"
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.12.3"
 

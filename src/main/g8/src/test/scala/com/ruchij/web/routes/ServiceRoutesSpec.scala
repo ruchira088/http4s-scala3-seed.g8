@@ -26,7 +26,7 @@ class ServiceRoutesSpec extends AnyFlatSpec with Matchers {
 
     val expectedJsonResponse =
       json"""{
-        "serviceName": "my-http4s-project",
+        "serviceName": "$name;format="normalize"$",
         "serviceVersion": "0.0.1",
         "organization": "com.ruchij",
         "scalaVersion": "2.13.2",

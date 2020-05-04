@@ -1,8 +1,5 @@
 FROM openjdk:11-jre-slim
 
-RUN apt-get update && \
-    apt-get upgrade -y
-
 WORKDIR /opt/$name;format="normalize"$
 
 ADD target/universal/$name;format="normalize"$-*.tgz .

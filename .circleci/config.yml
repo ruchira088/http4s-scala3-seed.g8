@@ -31,4 +31,4 @@ jobs:
           key: sbt-cache
           paths:
             - ~/.sbt
-            - ~/.coursier
+            - ~/.cache/coursier

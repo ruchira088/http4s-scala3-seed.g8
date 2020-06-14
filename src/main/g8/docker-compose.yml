@@ -6,6 +6,7 @@ services:
     build: .
     ports:
       - 5005:5005
+      - 8000:8000
     volumes:
       - "~/.sbt:/root/.sbt"
       - "~/Library/Caches/Coursier:/root/.cache/coursier" # MacOS Coursier cache

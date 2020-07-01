@@ -9,7 +9,7 @@ import org.http4s.Response
 
 object JsonUtils {
   def fromResponse[F[_]: Sync](response: Response[F]): F[Json] =
-    response.bodyAsText.compile[F, F, String].string
+    response.bodyText.compile[F, F, String].string
       .flatMap {
         text => eitherToF[Throwable, F].apply[Json](parseJson(text))
       }

@@ -13,7 +13,7 @@ lazy val root =
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
       buildInfoPackage := "com.eed3si9n.ruchij",
       topLevelDirectory := None,
-      scalacOptions ++= Seq("-Xlint", "-feature"),
+      scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
       addCompilerPlugin(kindProjector),
       addCompilerPlugin(betterMonadicFor),
       addCompilerPlugin(scalaTypedHoles)

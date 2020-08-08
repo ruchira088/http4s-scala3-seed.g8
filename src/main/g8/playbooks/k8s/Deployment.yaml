@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $name;format="normalize"$-deployment
+  namespace: $name;format="normalize"$-{{ git_branch }}
+spec:
+  selector:
+    matchLabels:
+      app: $name;format="normalize"$
+      branch: {{ git_branch }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: $name;format="normalize"$
+        branch: {{ git_branch }}
+    spec:
+      containers:
+        - name: $name;format="normalize"$-container
+          image: {{ docker_registry }}/$name;format="normalize"$:{{ git_commit }}
+          envFrom:
+            - configMapRef:
+                name: $name;format="normalize"$-config-map
+            - secretRef:
+                name: $name;format="normalize"$-secrets
+          readinessProbe:
+            httpGet:
+              port: http4s-port
+              path: /service
+              httpHeaders:
+                - name: X-Correlation-ID
+                  value: k8s-readiness-probe
+          startupProbe:
+            httpGet:
+              port: http4s-port
+              path: /service
+              httpHeaders:
+                - name: X-Correlation-ID
+                  value: k8s-startup-probe
+          ports:
+            - name: http4s-port
+              containerPort: 8000

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: $name;format="normalize"$-service
+  namespace: $name;format="normalize"$-{{ git_branch }}
+spec:
+  selector:
+    app: $name;format="normalize"$
+    branch: {{ git_branch }}
+  ports:
+    - name: http4s-port
+      port: 8000

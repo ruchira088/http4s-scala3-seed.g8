@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: $name;format="normalize"$-config-map
+  namespace: $name;format="normalize"$-{{ git_branch }}
+data:
+{% for key, value in config_values.items() %}
+  {{ key }}: "{{ value }}"
+{% endfor %}

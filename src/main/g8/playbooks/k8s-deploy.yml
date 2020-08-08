@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars:
+    docker_registry: localhost:32000
+
+  tasks:
+    - name: Render K8s resource files
+      import_tasks: tasks/k8s-resource-files.yml
+
+    - name: Set kube_config
+      import_tasks: tasks/k8s-config.yml
+
+    - name: Deploy K8s resources
+      block:
+        - name: Create Namespace
+          command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig {{ kube_config }}
+
+        - name: Create ConfigMap
+          command: kubectl apply -f k8s-output/ConfigMap.yaml --kubeconfig {{ kube_config }}
+
+        - name: Create Secrets
+          command: kubectl apply -f k8s-output/Secrets.yaml --kubeconfig {{ kube_config }}
+
+        - name: Deploy application
+          command: kubectl apply -f k8s-output --kubeconfig {{ kube_config }}
+
+        - name: Wait for successful deployment
+          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig {{ kube_config }} -n $name;format="normalize"$-{{ git_branch }}
+
+    - name: Clean up output directory
+      file:
+        path: k8s-output
+        state: absent

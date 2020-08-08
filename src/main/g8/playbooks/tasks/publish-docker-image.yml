@@ -1,0 +1,4 @@
+- name: Publish Docker image
+  shell: |
+    docker tag $name;format="normalize"$:{{ git_commit }} {{ docker_registry }}/$name;format="normalize"$:{{ git_commit }} && \
+    docker push {{ docker_registry }}/$name;format="normalize"$:{{ git_commit }}

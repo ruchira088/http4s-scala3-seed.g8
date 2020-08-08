@@ -1,0 +1,39 @@
+- name: Print start message
+  debug:
+    msg: Started building $name;format="normalize"$
+
+- name: Create output directory
+  file:
+    path: docker-output
+    state: directory
+
+- name: Clean and build sbt project
+  shell: cd ../ && sbt clean universal:packageZipTarball
+
+- name: Gather git information
+  import_tasks: git-info.yml
+
+- name: Generate the Dockerfile
+  template:
+    src: docker/Dockerfile-prod.j2
+    dest: docker-output/Dockerfile
+  vars:
+    build_timestamp: "{{ ansible_date_time.iso8601 }}"
+
+- name: Build Docker image
+  shell: |
+    docker build \
+      -f docker-output/Dockerfile \
+      -t $name;format="normalize"$:latest \
+      -t $name;format="normalize"$:{{ git_commit }} \
+      -t $name;format="normalize"$:{{ git_branch }}-{{ ansible_date_time.iso8601_basic_short }} \
+      ../target/universal/
+
+- name: Clean up output directory
+  file:
+    path: docker-output
+    state: absent
+
+- name: Print finish message
+  debug:
+    msg: Completed building $name;format="normalize"$

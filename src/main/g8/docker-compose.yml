@@ -4,6 +4,7 @@ services:
 
   $name;format="normalize"$:
     build: .
+    # image: $name;format="normalize"$:latest
     ports:
       - 5005:5005
       - 8000:8000

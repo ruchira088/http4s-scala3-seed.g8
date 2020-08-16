@@ -2,32 +2,36 @@
 - hosts: localhost
   connection: local
 
-  vars:
-    docker_registry: localhost:32000
-
   tasks:
+    - name: Gather git information
+      import_tasks: tasks/git-info.yml
+
     - name: Render K8s resource files
       import_tasks: tasks/k8s-resource-files.yml
+      vars:
+        docker_registry: localhost:32000
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml
+      vars:
+        aws_ssm_k8s_config_path:
 
     - name: Deploy K8s resources
       block:
         - name: Create Namespace
-          command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig {{ kube_config }}
+          command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/kubeconfig
 
         - name: Create ConfigMap
-          command: kubectl apply -f k8s-output/ConfigMap.yaml --kubeconfig {{ kube_config }}
+          command: kubectl apply -f k8s-output/ConfigMap.yaml --kubeconfig k8s-output/kubeconfig
 
         - name: Create Secrets
-          command: kubectl apply -f k8s-output/Secrets.yaml --kubeconfig {{ kube_config }}
+          command: kubectl apply -f k8s-output/Secrets.yaml --kubeconfig k8s-output/kubeconfig
 
         - name: Deploy application
-          command: kubectl apply -f k8s-output --kubeconfig {{ kube_config }}
+          command: kubectl apply -f k8s-output --kubeconfig k8s-output/kubeconfig
 
         - name: Wait for successful deployment
-          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig {{ kube_config }} -n $name;format="normalize"$-{{ git_branch }}
+          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig k8s-output/kubeconfig -n $name;format="normalize"$-{{ git_branch }}
 
     - name: Clean up output directory
       file:

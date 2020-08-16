@@ -2,12 +2,12 @@
 - hosts: localhost
   connection: local
 
-  vars:
-    docker_registry: ubuntu-vm:32000
-
   tasks:
     - name: Build Docker images
       import_tasks: tasks/build-docker-prod.yml
 
     - name: Publish Docker image
       import_tasks: tasks/publish-docker-image.yml
+      vars:
+        docker_registry:
+

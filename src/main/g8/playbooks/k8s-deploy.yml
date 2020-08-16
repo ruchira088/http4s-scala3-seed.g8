@@ -10,6 +10,7 @@
       import_tasks: tasks/k8s-resource-files.yml
       vars:
         docker_registry: localhost:32000
+        hostname: {{ git_branch }}.$name;format="normalize"$.ruchij.com
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml

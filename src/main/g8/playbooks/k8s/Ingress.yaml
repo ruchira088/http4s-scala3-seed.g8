@@ -5,7 +5,7 @@ metadata:
   namespace: $name;format="normalize"$-{{ git_branch }}
 spec:
   rules:
-    - host: <replace me>
+    - host: {{ hostname }}
       http:
         paths:
           - backend:

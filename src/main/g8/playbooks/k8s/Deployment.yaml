@@ -30,7 +30,16 @@ spec:
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-readiness-probe
+          livenessProbe:
+            httpGet:
+              port: http4s-port
+              path: /service
+              httpHeaders:
+                - name: X-Correlation-ID
+                  value: k8s-liveness-probe
           startupProbe:
+            periodSeconds: 5
+            failureThreshold: 5
             httpGet:
               port: http4s-port
               path: /service

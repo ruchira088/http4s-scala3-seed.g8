@@ -1,8 +1,11 @@
 package com.ruchij.web.routes
 
 import cats.effect.Sync
-import cats.implicits._
+import cats.implicits.toFlatMapOps
+import com.ruchij.circe.Encoders.dateTimeEncoder
 import com.ruchij.services.health.HealthService
+import io.circe.generic.auto.exportEncoder
+import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 

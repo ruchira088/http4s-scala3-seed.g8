@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: $name;format="normalize"$-certificate
+  namespace: $name;format="normalize"$-{{ git_branch }}
+spec:
+  secretName: $name;format="normalize"$-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: lets-encrypt
+  dnsNames:
+    - {{ hostname }}

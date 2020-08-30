@@ -4,6 +4,10 @@ metadata:
   name: $name;format="normalize"$-ingress
   namespace: $name;format="normalize"$-{{ git_branch }}
 spec:
+  tls:
+    - secretName: $name;format="normalize"$-tls
+      hosts:
+        - {{ hostname }}
   rules:
     - host: {{ hostname }}
       http:

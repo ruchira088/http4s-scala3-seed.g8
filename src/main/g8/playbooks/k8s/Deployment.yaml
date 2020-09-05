@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: $name;format="normalize"$-container
-          image: {{ docker_registry }}/$name;format="normalize"$:{{ git_commit }}
+          image: ruchira088/$name;format="normalize"$:{{ git_commit }}
           envFrom:
             - configMapRef:
                 name: $name;format="normalize"$-config-map
@@ -26,14 +26,14 @@ spec:
           readinessProbe:
             httpGet:
               port: http4s-port
-              path: /service
+              path: /health
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-readiness-probe
           livenessProbe:
             httpGet:
               port: http4s-port
-              path: /service
+              path: /health
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-liveness-probe
@@ -42,7 +42,7 @@ spec:
             failureThreshold: 5
             httpGet:
               port: http4s-port
-              path: /service
+              path: /health
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-startup-probe

@@ -15,7 +15,7 @@ object App extends IOApp {
       configObjectSource <- IO.delay(ConfigSource.defaultApplication)
       serviceConfiguration <- ServiceConfiguration.parse[IO](configObjectSource)
 
-      healthService = new HealthServiceImpl[IO]
+      healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
 
       _ <-
         BlazeServerBuilder.apply[IO](ExecutionContext.global)
@@ -24,5 +24,5 @@ object App extends IOApp {
           .serve.compile.drain
 
     }
-      yield ExitCode.Success
+    yield ExitCode.Success
 }

@@ -13,14 +13,14 @@ import org.scalatest.matchers.must.Matchers
 
 import scala.util.Properties
 
-class ServiceRoutesSpec extends AnyFlatSpec with Matchers {
+class HealthRoutesSpec extends AnyFlatSpec with Matchers {
   "GET /service" should "return a successful response containing service information" in {
     val dateTime = DateTime.now()
     implicit val clock: Clock[IO] = stubClock[IO](dateTime)
 
     val application = HttpTestApp[IO]()
 
-    val request = Request[IO](uri = Uri(path = "/service"))
+    val request = Request[IO](uri = Uri(path = "/health"))
 
     val response = application.run(request).unsafeRunSync()
 
@@ -31,7 +31,12 @@ class ServiceRoutesSpec extends AnyFlatSpec with Matchers {
         "organization": "com.ruchij",
         "scalaVersion": "2.13.3",
         "sbtVersion": "1.3.13",
+        "gitBranch" : "test-branch",
+        "gitCommit" : "my-commit",
         "javaVersion": \${Properties.javaVersion},
+        "gitBranch" : "test-branch",
+        "gitCommit" : "my-commit",
+        "buildTimestamp" : null,
         "timestamp": \$dateTime
       }"""
 

@@ -1,6 +1,6 @@
 version: 2.1
 
-alias:
+aliases:
   - &install-sbt
     name: Install sbt
     command: |
@@ -9,16 +9,32 @@ alias:
       sudo apt-get update && \
       sudo apt-get install sbt -y
 
+  - &install-ansible
+    name: Install Ansible
+    command: |
+      sudo apt update && \
+      sudo apt install software-properties-common python-pip -y
+
+      pip install ansible boto3 botocore
+
+  - &install-kubectl
+    name: Install kubectl
+    command: |
+      curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
+      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list && \
+      sudo apt update && \
+      sudo apt install -y kubectl
+
 jobs:
-  build:
+  build-and-test:
     docker:
       - image: cimg/openjdk:11.0
     steps:
       - run: *install-sbt
       - checkout
-      - restore_cache:
+      - restore_cache: &dependency-cache-keys
           key: sbt-cache-{{ checksum "project/build.properties" }}-{{ checksum "project/plugins.sbt" }}
-      - run:
+      - run: &sbt_template_project
           name: Create a new sbt project from the g8 template
           command: sbt g8
       - run:
@@ -29,3 +45,49 @@ jobs:
           paths:
             - ~/.sbt
             - ~/.cache/coursier
+
+  build-and-publish-docker-image:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - setup_remote_docker
+      - run: *install-sbt
+      - run: *install-ansible
+      - checkout
+      - restore_cache: *dependency-cache-keys
+      - run: *sbt_template_project
+      - run:
+          name: Build and publish Docker images
+          command: ansible-playbook target/g8/playbooks/build-and-publish-docker-images.yml
+
+  deploy-to-k8s:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - run: *install-sbt
+      - run: *install-ansible
+      - run: *install-kubectl
+      - checkout
+      - restore_cache: *dependency-cache-keys
+      - run: *sbt_template_project
+      - run:
+          name: Deploy to home K8s server
+          command: ansible-playbook target/g8/playbooks/k8s-deploy.yml
+
+workflows:
+  version: 2
+
+  http4s-seed:
+    jobs:
+      - build-and-test
+
+      - build-and-publish-docker-image:
+          context: aws-credentials
+          requires:
+            - build-and-test
+
+      - deploy-to-k8s:
+          context: aws-credentials
+          requires:
+            - build-and-publish-docker-image
+

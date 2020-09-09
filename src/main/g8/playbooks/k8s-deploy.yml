@@ -9,7 +9,7 @@
     - name: Render K8s resource files
       import_tasks: tasks/k8s-resource-files.yml
       vars:
-        hostname: "{{ git_branch }}.$name;format="normalize"$.ruchij.com"
+        hostname: "{{ '$name;format="normalize"$.home.ruchij.com' if git_branch == 'master' else git_branch + '.$name;format="normalize"$.home.ruchij.com' }}"
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml

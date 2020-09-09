@@ -69,13 +69,13 @@ jobs:
 
   deploy-to-k8s:
     docker:
-      - image: cimg/base:2020.09
+      - image: cimg/base:stable
     steps:
       - run: *install-ansible
       - run: *install-kubectl
       - checkout
       - run:
-          name: Deploy to home K8s server
+          name: Deploy application to K8s
           command: ansible-playbook playbooks/k8s-deploy.yml
 
 workflows:

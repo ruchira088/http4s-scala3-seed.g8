@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: $name;format="normalize"$-{{ git_branch }}
+  name: {{ namespace }}
   labels:
     project: $name;format="normalize"$
     branch: {{ git_branch }}

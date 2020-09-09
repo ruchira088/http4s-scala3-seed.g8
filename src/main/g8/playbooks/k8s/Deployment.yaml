@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: $name;format="normalize"$-deployment
-  namespace: $name;format="normalize"$-{{ git_branch }}
+  namespace: {{ namespace }}
 spec:
   selector:
     matchLabels:

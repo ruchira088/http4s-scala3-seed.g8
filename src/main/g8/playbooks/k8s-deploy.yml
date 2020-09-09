@@ -6,10 +6,14 @@
     - name: Gather git information
       import_tasks: tasks/git-info.yml
 
+    - set_fact:
+        namespace: "{{ '$name;format="normalize"$' if git_branch == 'master' else '$name;format="normalize"$-' + git_branch }}"
+
     - name: Render K8s resource files
       import_tasks: tasks/k8s-resource-files.yml
       vars:
-        hostname: "{{ '$name;format="normalize"$.home.ruchij.com' if git_branch == 'master' else git_branch + '.$name;format="normalize"$.home.ruchij.com' }}"
+        domain: $name;format="normalize"$.home.ruchij.com
+        hostname: "{{ domain if git_branch == 'master' else git_branch + '.' + domain }}"
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml
@@ -29,7 +33,7 @@
           command: kubectl apply -f k8s-output --kubeconfig k8s-output/kubeconfig
 
         - name: Wait for successful deployment
-          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig k8s-output/kubeconfig -n $name;format="normalize"$-{{ git_branch }}
+          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig k8s-output/kubeconfig -n {{ namespace }}
 
     - name: Clean up output directory
       file:

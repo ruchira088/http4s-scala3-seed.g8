@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
   name: $name;format="normalize"$-certificate
-  namespace: $name;format="normalize"$-{{ git_branch }}
+  namespace: {{ namespace }}
 spec:
   secretName: $name;format="normalize"$-tls
   issuerRef:

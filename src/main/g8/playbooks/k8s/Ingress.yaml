@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: $name;format="normalize"$-ingress
-  namespace: $name;format="normalize"$-{{ git_branch }}
+  namespace: {{ namespace }}
 spec:
   tls:
     - secretName: $name;format="normalize"$-tls

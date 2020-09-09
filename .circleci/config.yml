@@ -74,20 +74,29 @@ jobs:
           name: Deploy to home K8s server
           command: ansible-playbook target/g8/playbooks/k8s-deploy.yml
 
+orbs:
+  slack: circleci/slack@3
+
 workflows:
   version: 2
 
   http4s-seed:
     jobs:
-      - build-and-test
+      - build-and-test:
+          post-steps:
+            - slack/status
 
       - build-and-publish-docker-image:
           context: aws-credentials
           requires:
             - build-and-test
+          post-steps:
+            - slack/status
 
       - deploy-to-k8s:
           context: aws-credentials
           requires:
             - build-and-publish-docker-image
+          post-steps:
+            - slack/status
 

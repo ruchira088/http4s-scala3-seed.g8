@@ -3,7 +3,7 @@
   connection: local
 
   tasks:
-    - name: Build Docker images
+    - name: Build Docker image
       import_tasks: tasks/build-docker-prod.yml
 
     - name: Publish Docker image

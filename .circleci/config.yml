@@ -57,8 +57,8 @@ jobs:
       - restore_cache: *dependency-cache-keys
       - run: *sbt_template_project
       - run:
-          name: Build and publish Docker images
-          command: ansible-playbook target/g8/playbooks/build-and-publish-docker-images.yml
+          name: Build and publish Docker image
+          command: ansible-playbook target/g8/playbooks/build-and-publish-docker-image.yml
 
   deploy-to-k8s:
     docker:

@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk
+FROM openjdk:8-jdk
 
 RUN apt-get update && \
     apt-get install apt-transport-https bc ca-certificates software-properties-common -y
@@ -14,6 +14,6 @@ COPY . .
 
 EXPOSE 5005
 
-ENTRYPOINT ["sbt"]
+ENTRYPOINT ["sbt", "-jvm-debug", "5005"]
 
 CMD ["run"]

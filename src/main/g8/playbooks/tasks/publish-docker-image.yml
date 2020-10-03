@@ -22,5 +22,5 @@
 
 - name: Publish Docker image
   shell: |
-    docker tag $name;format="normalize"$:{{ git_commit }} ruchira088/$name;format="normalize"$:{{ git_commit }} && \
-    docker push ruchira088/$name;format="normalize"$:{{ git_commit }}
+    docker tag $name;format="normalize"$:{{ git_branch }}-{{ git_commit }} ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }} && \
+    docker push ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }}

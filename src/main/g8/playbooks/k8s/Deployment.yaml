@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: $name;format="normalize"$-container
-          image: ruchira088/$name;format="normalize"$:{{ git_commit }}
+          image: ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }}
           envFrom:
             - configMapRef:
                 name: $name;format="normalize"$-config-map

@@ -1,6 +1,7 @@
 package com.ruchij.web.routes
 
 import cats.effect.{Clock, IO}
+import com.eed3si9n.ruchij.BuildInfo
 import com.ruchij.circe.Encoders.dateTimeEncoder
 import com.ruchij.test.HttpTestApp
 import com.ruchij.test.utils.Providers.stubClock
@@ -27,7 +28,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers {
     val expectedJsonResponse =
       json"""{
         "serviceName": "$name;format="normalize"$",
-        "serviceVersion": "0.0.1",
+        "serviceVersion": \${BuildInfo.version},
         "organization": "com.ruchij",
         "scalaVersion": "2.13.3",
         "sbtVersion": "1.4.0",

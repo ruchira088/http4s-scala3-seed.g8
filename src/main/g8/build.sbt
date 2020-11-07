@@ -4,6 +4,7 @@ import sbtrelease.ReleaseStateTransformations._
 import sbtrelease.Utilities.stateW
 
 val ReleaseBranch = "dev"
+val ProductionBranch = "master"
 
 lazy val root =
   (project in file("."))
@@ -58,15 +59,15 @@ val mergeReleaseToMaster = { state: State =>
   val (updatedState, releaseTag) = state.extract.runTask(releaseTagName, state)
 
   val actions =
-    git.cmd("checkout", "master") #&&
+    git.cmd("checkout", ProductionBranch) #&&
       git.cmd("merge", releaseTag) #&&
       git.cmd("checkout", ReleaseBranch)
 
-  updatedState.log.info(s"Merging \$releaseTag to master...")
+  updatedState.log.info(s"Merging \$releaseTag to \$ProductionBranch...")
 
   actions !!
 
-  updatedState.log.info(s"Successfully merged \$releaseTag to master")
+  updatedState.log.info(s"Successfully merged \$releaseTag to \$ProductionBranch")
 
   updatedState
 }

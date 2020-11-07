@@ -1,6 +1,7 @@
 import Dependencies._
 import sbtrelease.Git
 import sbtrelease.ReleaseStateTransformations._
+import sbtrelease.Utilities.stateW
 
 val ReleaseBranch = "dev"
 
@@ -40,16 +41,38 @@ lazy val rootTestDependencies =
 
 addCommandAlias("testWithCoverage", "; coverage; test; coverageReport")
 
-val verifyReleaseBranch = taskKey[Unit]("Verifies the release git branch")
-verifyReleaseBranch := {
-  val git = Git.mkVcs(baseDirectory.value)
+val verifyReleaseBranch = { state: State =>
+  val git = Git.mkVcs(state.extract.get(baseDirectory))
   val branch = git.currentBranch
 
-  if (branch != ReleaseBranch) sys.error(s"The release branch is \$ReleaseBranch, but the current branch is set to \$branch") else (): Unit
+  if (branch != ReleaseBranch) {
+    sys.error {
+      s"The release branch is \$ReleaseBranch, but the current branch is set to \$branch"
+    }
+  } else state
+}
+
+val mergeReleaseToMaster = { state: State =>
+  val git = Git.mkVcs(state.extract.get(baseDirectory))
+
+  val (updatedState, releaseTag) = state.extract.runTask(releaseTagName, state)
+
+  val actions =
+    git.cmd("checkout", "master") #&&
+      git.cmd("merge", releaseTag) #&&
+      git.cmd("checkout", ReleaseBranch)
+
+  updatedState.log.info(s"Merging \$releaseTag to master...")
+
+  actions !!
+
+  updatedState.log.info(s"Successfully merged \$releaseTag to master")
+
+  updatedState
 }
 
 releaseProcess := Seq(
-  releaseStepTask(verifyReleaseBranch),
+  ReleaseStep(verifyReleaseBranch),
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
@@ -57,6 +80,7 @@ releaseProcess := Seq(
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
+  ReleaseStep(mergeReleaseToMaster),
   setNextVersion,
   commitNextVersion,
   pushChanges

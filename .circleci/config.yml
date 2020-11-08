@@ -1,37 +1,29 @@
 version: 2.1
 
 aliases:
-  - &install-sbt
-    name: Install sbt
-    command: |
-      echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list && \
-      sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
-      sudo apt update && \
-      sudo apt install sbt -y
-
   - &install-ansible
     name: Install Ansible
     command: |
       sudo apt update && \
-      sudo apt install software-properties-common && \
-      sudo apt-add-repository -y -u ppa:ansible/ansible && \
-      sudo apt install ansible python-pip -y && \
-      pip install boto3 botocore openshift
-
-  - &install-kubectl
-    name: Install kubectl
-    command: |
-      curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
-      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list && \
-      sudo apt update && \
-      sudo apt install -y kubectl
+      sudo apt install python3-pip -y && \
+      pip3 install boto3 botocore openshift ansible
 
 jobs:
+  build-ci-image:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - setup_remote_docker
+      - run: *install-ansible
+      - checkout
+      - run:
+          name: Build and publish Docker CI image
+          command: ansible-playbook playbooks/build-and-publish-docker-ci.yml
+
   build-and-test:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: ruchira088/docker-ci:http4s-seed
     steps:
-      - run: *install-sbt
       - checkout
       - restore_cache: &dependency-cache-keys
           key: sbt-cache-{{ checksum "project/build.properties" }}-{{ checksum "project/plugins.sbt" }}
@@ -49,11 +41,9 @@ jobs:
 
   build-and-publish-docker-image:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: ruchira088/docker-ci:http4s-seed
     steps:
       - setup_remote_docker
-      - run: *install-sbt
-      - run: *install-ansible
       - checkout
       - restore_cache: *dependency-cache-keys
       - run: *sbt_template_project
@@ -63,11 +53,8 @@ jobs:
 
   deploy-to-k8s:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: ruchira088/docker-ci:http4s-seed
     steps:
-      - run: *install-sbt
-      - run: *install-ansible
-      - run: *install-kubectl
       - checkout
       - restore_cache: *dependency-cache-keys
       - run: *sbt_template_project
@@ -100,4 +87,18 @@ workflows:
             - build-and-publish-docker-image
           post-steps:
             - slack/status
+
+  docker-ci:
+    jobs:
+      - build-ci-image:
+          post-steps:
+            - slack/status
+    triggers:
+      - schedule:
+          cron: "0 4 1,15 * *"
+          filters:
+            branches:
+              only:
+                - master
+
 

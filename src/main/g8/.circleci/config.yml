@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: &dependency-cache-keys
-          key:
+          keys:
             - sbt-cache-{{ checksum "project/build.properties" }}-{{ checksum "project/plugins.sbt" }}-{{ checksum "project/Dependencies.scala" }}
             - sbt-cache
       - run:

@@ -24,9 +24,9 @@ object Dependencies
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
-  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.11.2" cross CrossVersion.full
+  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full
 
-  lazy val scalaTypedHoles = "com.github.cb372" % "scala-typed-holes" % "0.1.6" cross CrossVersion.full
+  lazy val scalaTypedHoles = "com.github.cb372" % "scala-typed-holes" % "0.1.7" cross CrossVersion.full
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 

@@ -7,7 +7,9 @@ import com.ruchij.test.HttpTestApp
 import com.ruchij.test.utils.Providers.stubClock
 import com.ruchij.test.matchers._
 import io.circe.literal._
-import org.http4s.{Request, Status, Uri}
+import org.http4s.Method.GET
+import org.http4s.implicits.http4sLiteralsSyntax
+import org.http4s.{Request, Status}
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
@@ -21,7 +23,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers {
 
     val application = HttpTestApp[IO]()
 
-    val request = Request[IO](uri = Uri(path = "/service/info"))
+    val request = Request[IO](GET, uri"/service/info")
 
     val response = application.run(request).unsafeRunSync()
 

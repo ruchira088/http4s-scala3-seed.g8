@@ -14,7 +14,7 @@ object HealthRoutes {
     import dsl._
 
     HttpRoutes.of[F] {
-      case GET -> Root =>
+      case GET / "info" -> Root =>
         healthService.serviceInformation()
           .flatMap(serviceInformation => Ok(serviceInformation))
     }

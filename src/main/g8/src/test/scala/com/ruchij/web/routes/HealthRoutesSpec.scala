@@ -15,13 +15,13 @@ import org.scalatest.matchers.must.Matchers
 import scala.util.Properties
 
 class HealthRoutesSpec extends AnyFlatSpec with Matchers {
-  "GET /service" should "return a successful response containing service information" in {
+  "GET /service/info" should "return a successful response containing service information" in {
     val dateTime = DateTime.now()
     implicit val clock: Clock[IO] = stubClock[IO](dateTime)
 
     val application = HttpTestApp[IO]()
 
-    val request = Request[IO](uri = Uri(path = "/health"))
+    val request = Request[IO](uri = Uri(path = "/service/info"))
 
     val response = application.run(request).unsafeRunSync()
 

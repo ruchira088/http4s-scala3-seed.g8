@@ -26,14 +26,14 @@ spec:
           readinessProbe:
             httpGet:
               port: http4s-port
-              path: /health
+              path: /service/info
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-readiness-probe
           livenessProbe:
             httpGet:
               port: http4s-port
-              path: /health
+              path: /service/info
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-liveness-probe
@@ -42,7 +42,7 @@ spec:
             failureThreshold: 5
             httpGet:
               port: http4s-port
-              path: /health
+              path: /service/info
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-startup-probe

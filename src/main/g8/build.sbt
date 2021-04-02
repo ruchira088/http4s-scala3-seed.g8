@@ -6,7 +6,7 @@ import sbtrelease.Utilities.stateW
 import scala.sys.process.ProcessBuilder
 
 val ReleaseBranch = "dev"
-val ProductionBranch = "master"
+val ProductionBranch = "main"
 
 lazy val root =
   (project in file("."))

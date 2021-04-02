@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.5"
-  val Http4sVersion = "0.21.20"
+  val Http4sVersion = "0.21.21"
   val CirceVersion = "0.13.0"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
@@ -30,7 +30,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.6"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.7"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }

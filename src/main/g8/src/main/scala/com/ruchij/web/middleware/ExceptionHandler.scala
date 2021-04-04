@@ -1,12 +1,14 @@
 package com.ruchij.web.middleware
 
 import cats.arrow.FunctionK
-import cats.data.Kleisli
+import cats.data.{Kleisli, NonEmptyList}
 import cats.effect.Sync
 import cats.implicits._
 import com.ruchij.exceptions.ResourceNotFoundException
 import com.ruchij.types.FunctionKTypes
 import com.ruchij.web.responses.ErrorResponse
+import io.circe.generic.auto._
+import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import org.http4s.dsl.impl.EntityResponseGenerator
 import org.http4s.{HttpApp, Request, Response, Status}
 
@@ -25,7 +27,8 @@ object ExceptionHandler {
     case _ => Status.InternalServerError
   }
 
-  val throwableResponseBody: Throwable => ErrorResponse = throwable => ErrorResponse(List(throwable))
+  val throwableResponseBody: Throwable => ErrorResponse =
+    throwable => ErrorResponse(NonEmptyList.of(throwable.getMessage))
 
   def errorResponseMapper[F[_]](throwable: Throwable)(response: Response[F]): Response[F] =
     throwable match {

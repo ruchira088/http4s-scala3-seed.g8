@@ -27,8 +27,10 @@ object ExceptionHandler {
     case _ => Status.InternalServerError
   }
 
-  val throwableResponseBody: Throwable => ErrorResponse =
-    throwable => ErrorResponse(NonEmptyList.of(throwable.getMessage))
+  val throwableResponseBody: Throwable => ErrorResponse = {
+    throwable =>
+      Option(throwable.getCause).fold(ErrorResponse(NonEmptyList.of(throwable.getMessage)))(throwableResponseBody)
+  }
 
   def errorResponseMapper[F[_]](throwable: Throwable)(response: Response[F]): Response[F] =
     throwable match {

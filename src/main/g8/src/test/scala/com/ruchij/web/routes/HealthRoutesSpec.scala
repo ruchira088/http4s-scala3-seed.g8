@@ -33,7 +33,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers {
         "serviceVersion": \${BuildInfo.version},
         "organization": "com.ruchij",
         "scalaVersion": "2.13.5",
-        "sbtVersion": "1.4.9",
+        "sbtVersion": "1.5.0",
         "gitBranch" : "test-branch",
         "gitCommit" : "my-commit",
         "javaVersion": \${Properties.javaVersion},

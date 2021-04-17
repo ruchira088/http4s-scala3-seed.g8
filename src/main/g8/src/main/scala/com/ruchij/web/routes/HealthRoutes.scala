@@ -15,7 +15,7 @@ object HealthRoutes {
 
     HttpRoutes.of[F] {
       case GET -> Root / "info" =>
-        healthService.serviceInformation()
+        healthService.serviceInformation
           .flatMap(serviceInformation => Ok(serviceInformation))
     }
   }

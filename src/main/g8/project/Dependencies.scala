@@ -20,7 +20,7 @@ object Dependencies
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.10.10"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.14.1"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.15.0"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 

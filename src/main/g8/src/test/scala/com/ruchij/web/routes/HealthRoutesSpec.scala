@@ -37,7 +37,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers {
       }"""
 
     for {
-      httpApplication <- HttpTestApp[IO]
+      httpApplication <- HttpTestApp.create[IO]
 
       request = Request[IO](GET, uri"/service/info")
 

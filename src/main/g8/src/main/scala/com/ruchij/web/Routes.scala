@@ -7,6 +7,7 @@ import com.ruchij.web.routes.HealthRoutes
 import org.http4s.{HttpApp, HttpRoutes}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
+import org.http4s.server.middleware.GZip
 
 object Routes {
   def apply[F[_]: Sync](healthService: HealthService[F]): HttpApp[F] = {
@@ -17,8 +18,10 @@ object Routes {
         "/service" -> HealthRoutes(healthService)
       )
 
-    ExceptionHandler {
-      NotFoundHandler(routes)
+    GZip {
+      ExceptionHandler {
+        NotFoundHandler(routes)
+      }
     }
   }
 }

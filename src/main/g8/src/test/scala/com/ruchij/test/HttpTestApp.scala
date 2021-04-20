@@ -10,7 +10,7 @@ import org.http4s.HttpApp
 object HttpTestApp {
   val BuildInfo: BuildInformation = BuildInformation(Some("test-branch"), Some("my-commit"), None)
 
-  def apply[F[_]: Sync: Clock]: F[HttpApp[F]] =
+  def create[F[_]: Sync: Clock]: F[HttpApp[F]] =
     Applicative[F].pure {
       Routes(new HealthServiceImpl[F](BuildInfo))
     }

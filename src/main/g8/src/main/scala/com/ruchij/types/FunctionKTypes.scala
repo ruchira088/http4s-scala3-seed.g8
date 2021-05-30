@@ -4,7 +4,7 @@ import cats.{Applicative, ApplicativeError, ~>}
 
 object FunctionKTypes {
   implicit class FunctionKOps[F[+_, +_], A, B](value: F[B, A]) {
-    def to[G[_], C >: B](implicit functionK: F[C, *] ~> G): G[A] = functionK(value)
+    def toType[G[_], C >: B](implicit functionK: F[C, *] ~> G): G[A] = functionK(value)
   }
 
   implicit def eitherToF[L, F[_]: ApplicativeError[*[_], L]]: Either[L, *] ~> F =

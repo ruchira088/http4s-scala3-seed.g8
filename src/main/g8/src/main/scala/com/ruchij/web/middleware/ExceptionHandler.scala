@@ -5,7 +5,6 @@ import cats.data.{Kleisli, NonEmptyList}
 import cats.effect.Sync
 import cats.implicits._
 import com.ruchij.exceptions.ResourceNotFoundException
-import com.ruchij.types.FunctionKTypes
 import com.ruchij.web.responses.ErrorResponse
 import io.circe.generic.auto._
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
@@ -41,6 +40,6 @@ object ExceptionHandler {
     new EntityResponseGenerator[F, F] {
       override def status: Status = throwableStatusMapper(throwable)
 
-      override def liftG: FunctionK[F, F] = FunctionKTypes.identityFunctionK[F]
+      override def liftG: FunctionK[F, F] = FunctionK.id[F]
     }
 }

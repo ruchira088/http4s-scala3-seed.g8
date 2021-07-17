@@ -3,6 +3,7 @@ import sbtrelease.Git
 import sbtrelease.ReleaseStateTransformations._
 import sbtrelease.Utilities.stateW
 
+import java.awt.Desktop
 import scala.sys.process.ProcessBuilder
 
 val ReleaseBranch = "dev"
@@ -41,8 +42,6 @@ lazy val rootDependencies =
 
 lazy val rootTestDependencies =
   Seq(scalaTest, pegdown)
-
-addCommandAlias("testWithCoverage", "; coverage; test; coverageReport")
 
 val verifyReleaseBranch = { state: State =>
   val git = Git.mkVcs(state.extract.get(baseDirectory))
@@ -99,3 +98,16 @@ releaseProcess := Seq(
   commitNextVersion,
   pushChanges
 )
+
+val viewCoverageResults = taskKey[Unit]("Opens the coverage result in the default browser")
+
+viewCoverageResults := {
+  val coverageResults =
+    target.value.toPath.resolve(s"scala-\${scalaBinaryVersion.value}/scoverage-report/index.html")
+
+  Desktop.getDesktop.browse(coverageResults.toUri)
+}
+
+addCommandAlias("cleanCompile", "; clean; compile")
+addCommandAlias("cleanTest", "; clean; test")
+addCommandAlias("testWithCoverage", "; clean; coverage; test; coverageAggregate; viewCoverageResults")

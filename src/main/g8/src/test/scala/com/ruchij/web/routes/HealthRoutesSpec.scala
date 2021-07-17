@@ -15,35 +15,41 @@ import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 
+import java.util.concurrent.TimeUnit
 import scala.util.Properties
 
 class HealthRoutesSpec extends AnyFlatSpec with Matchers {
   "GET /service/info" should "return a successful response containing service information" in runIO {
-    val dateTime = DateTime.now()
-    implicit val clock: Clock[IO] = stubClock[IO](dateTime)
-
-    val expectedJsonResponse =
-      json"""{
-        "serviceName": "$name;format="normalize"$",
-        "serviceVersion": \${BuildInfo.version},
-        "organization": "com.ruchij",
-        "scalaVersion": "2.13.6",
-        "sbtVersion": "1.5.5",
-        "javaVersion": \${Properties.javaVersion},
-        "gitBranch" : "test-branch",
-        "gitCommit" : "my-commit",
-        "buildTimestamp" : null,
-        "timestamp": \$dateTime
-      }"""
-
     for {
-      httpApplication <- HttpTestApp.create[IO]
+      timestamp <-
+        Clock.create[IO].realTime(TimeUnit.MILLISECONDS)
+          .map(milliseconds => new DateTime(milliseconds))
+
+      httpApplication <- {
+        implicit val clock: Clock[IO] = stubClock[IO](timestamp)
+
+        HttpTestApp.create[IO]
+      }
 
       request = Request[IO](GET, uri"/service/info")
 
       response <- httpApplication.run(request)
 
       _ = {
+        val expectedJsonResponse =
+          json"""{
+            "serviceName": "my-http4s-project",
+            "serviceVersion": \${BuildInfo.version},
+            "organization": "com.ruchij",
+            "scalaVersion": \${BuildInfo.scalaVersion},
+            "sbtVersion": \${BuildInfo.sbtVersion},
+            "javaVersion": \${Properties.javaVersion},
+            "gitBranch" : "test-branch",
+            "gitCommit" : "my-commit",
+            "buildTimestamp" : null,
+            "timestamp": \$timestamp
+          }"""
+
         response must beJsonContentType
         response must haveJson(expectedJsonResponse)
         response must haveStatus(Status.Ok)

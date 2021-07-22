@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.6"
-  val Http4sVersion = "0.21.24"
+  val Http4sVersion = "0.22.0"
   val CirceVersion = "0.14.1"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
@@ -22,7 +22,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.16.0"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.4"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full
 

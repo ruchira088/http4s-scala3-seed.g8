@@ -1,21 +1,24 @@
 package com.ruchij.test.matchers
 
+import cats.Show
 import org.http4s.headers.`Content-Type`
-import org.http4s.{MediaType, Response}
+import org.http4s.{Header, MediaType, ParseResult, Response}
 import org.scalatest.matchers.{MatchResult, Matcher}
 
 class ContentTypeMatcher[F[_]](mediaType: MediaType) extends Matcher[Response[F]] {
   override def apply(response: Response[F]): MatchResult = {
-    val contentType: Option[MediaType] = response.headers.get(`Content-Type`).map(_.mediaType)
+    val maybeContentTypeResult: Option[ParseResult[MediaType]] =
+      response.headers.get(Header[`Content-Type`].name)
+        .map { header => MediaType.parse(header.head.value) }
 
     MatchResult(
-      contentType.contains(mediaType),
+      maybeContentTypeResult.exists(_.contains(mediaType)),
       s"""
-        |Expected Content-Type: \$mediaType
-        |
-        |Actual Content-Type: \${contentType.map(_.toString).getOrElse("Missing Content-Type header")}
-        |""".stripMargin,
-      s"Content-Type is \$mediaType"
+         |Response Content-Type header value did NOT match expected media type,
+         |   Expected: \${Show[MediaType].show(mediaType)}
+         |   Actual: \${maybeContentTypeResult.map(_.fold(_.message, Show[MediaType].show)).getOrElse("Missing Content-Type header")}
+         |""".stripMargin,
+      s"Content-Type is \${Show[MediaType].show(mediaType)}"
     )
   }
 }

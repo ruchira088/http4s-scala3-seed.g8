@@ -22,7 +22,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.16.0"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.4"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.5"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full
 

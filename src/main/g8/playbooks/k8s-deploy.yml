@@ -21,19 +21,19 @@
     - name: Deploy K8s resources
       block:
         - name: Create Namespace
-          command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/kubeconfig
+          command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig {{ kubeconfig }}
 
         - name: Create ConfigMap
-          command: kubectl apply -f k8s-output/ConfigMap.yaml --kubeconfig k8s-output/kubeconfig
+          command: kubectl apply -f k8s-output/ConfigMap.yaml --kubeconfig {{ kubeconfig }}
 
         - name: Create Secrets
-          command: kubectl apply -f k8s-output/Secrets.yaml --kubeconfig k8s-output/kubeconfig
+          command: kubectl apply -f k8s-output/Secrets.yaml --kubeconfig {{ kubeconfig }}
 
         - name: Deploy application
-          command: kubectl apply -f k8s-output --kubeconfig k8s-output/kubeconfig
+          command: kubectl apply -f k8s-output --kubeconfig {{ kubeconfig }}
 
         - name: Wait for successful deployment
-          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig k8s-output/kubeconfig -n {{ namespace }}
+          command: kubectl rollout status deployment $name;format="normalize"$-deployment --kubeconfig {{ kubeconfig }} -n {{ namespace }}
 
     - name: Clean up output directory
       file:

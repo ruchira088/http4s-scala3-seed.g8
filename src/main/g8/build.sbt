@@ -41,7 +41,7 @@ lazy val rootDependencies =
   )
 
 lazy val rootTestDependencies =
-  Seq(scalaTest, pegdown)
+  Seq(scalaTest, scalaMock, pegdown)
 
 val verifyReleaseBranch = { state: State =>
   val git = Git.mkVcs(state.extract.get(baseDirectory))

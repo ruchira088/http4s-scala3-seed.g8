@@ -14,14 +14,13 @@ import org.http4s.Method.GET
 import org.http4s.implicits.http4sLiteralsSyntax
 import org.http4s.{Request, Status}
 import org.scalamock.scalatest.MockFactory
-import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 
 import java.util.concurrent.TimeUnit
 import scala.util.Properties
 
-class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockFactory with OptionValues {
+class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockFactory {
 
   "GET /service/info" should "return a successful response containing service information" in runIO {
     for {

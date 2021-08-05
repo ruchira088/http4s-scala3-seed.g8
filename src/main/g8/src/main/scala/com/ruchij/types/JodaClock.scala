@@ -5,8 +5,6 @@ import cats.effect.{Clock, Sync}
 import cats.implicits._
 import org.joda.time.DateTime
 
-import java.util.concurrent.TimeUnit
-
 trait JodaClock[F[_]] {
   val timestamp: F[DateTime]
 }
@@ -17,8 +15,8 @@ object JodaClock {
   implicit def fromClock[F[_]: Applicative: Clock]: JodaClock[F] =
     new JodaClock[F] {
       override val timestamp: F[DateTime] =
-        Clock[F].realTime(TimeUnit.MILLISECONDS).map(milliseconds => new DateTime(milliseconds))
+        Clock[F].realTime.map(duration => new DateTime(duration.toMillis))
     }
 
-  def create[F[_]: Sync]: JodaClock[F] = JodaClock.fromClock[F](Applicative[F], Clock.create[F])
+  def create[F[_]: Sync]: JodaClock[F] = JodaClock.fromClock[F]
 }

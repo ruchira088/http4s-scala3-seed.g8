@@ -1,32 +1,29 @@
 package com.ruchij.types
 
 import cats.effect.kernel.Sync
-import org.slf4j.{LoggerFactory, Logger => Slf4jLogger}
+import com.typesafe.scalalogging.{Logger => TypesafeLogger}
 
 import scala.reflect.ClassTag
 
-case class Logger[A: ClassTag](slf4jLogger: Slf4jLogger) {
+case class Logger[A: ClassTag](typesafeLogger: TypesafeLogger) {
 
   def info[F[_]: Sync](infoMessage: String): F[Unit] =
     Sync[F].blocking {
-      slf4jLogger.info(infoMessage)
+      typesafeLogger.info(infoMessage)
     }
 
   def warn[F[_]: Sync](warnMessage: String): F[Unit] =
     Sync[F].blocking {
-      slf4jLogger.warn(warnMessage)
+      typesafeLogger.warn(warnMessage)
     }
 
   def error[F[_]: Sync](errorMessage: String): F[Unit] =
     Sync[F].blocking {
-      slf4jLogger.error(errorMessage)
+      typesafeLogger.error(errorMessage)
     }
 
 }
 
 object Logger {
-  def apply[A](implicit classTag: ClassTag[A]): Logger[A] =
-    Logger {
-      LoggerFactory.getLogger(classTag.runtimeClass)
-    }
+  def apply[A: ClassTag]: Logger[A] = Logger { TypesafeLogger[A] }
 }

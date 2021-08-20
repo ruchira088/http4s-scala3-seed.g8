@@ -37,7 +37,8 @@ lazy val rootDependencies =
     circeLiteral,
     jodaTime,
     pureconfig,
-    logbackClassic
+    logbackClassic,
+    scalaLogging
   )
 
 lazy val rootTestDependencies =

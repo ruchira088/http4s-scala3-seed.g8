@@ -49,3 +49,11 @@ spec:
           ports:
             - name: http4s-port
               containerPort: 8000
+          volumeMounts:
+            - mountPath: /opt/data
+              name: file-config-map
+      volumes:
+        - name: file-config-map
+          configMap:
+            name: $name;format="normalize"$-file-config-map
+

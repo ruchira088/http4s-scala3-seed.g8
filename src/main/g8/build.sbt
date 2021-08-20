@@ -22,6 +22,7 @@ lazy val root =
       buildInfoPackage := "com.eed3si9n.ruchij",
       topLevelDirectory := None,
       scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
+      Universal / javaOptions ++= Seq("-Dlogback.configurationFile=/opt/data/logback.xml"),
       addCompilerPlugin(kindProjector),
       addCompilerPlugin(betterMonadicFor),
       addCompilerPlugin(scalaTypedHoles)

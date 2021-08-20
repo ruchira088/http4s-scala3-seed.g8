@@ -23,8 +23,11 @@
         - name: Create Namespace
           command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig {{ kubeconfig }}
 
-        - name: Create ConfigMap
-          command: kubectl apply -f k8s-output/ConfigMap.yaml --kubeconfig {{ kubeconfig }}
+        - name: Create data ConfigMap
+          command: kubectl apply -f k8s-output/DataConfigMap.yaml --kubeconfig {{ kubeconfig }}
+
+        - name: Create file ConfigMap
+          command: kubectl apply -f k8s-output/FileConfigMap.yaml --kubeconfig {{ kubeconfig }}
 
         - name: Create Secrets
           command: kubectl apply -f k8s-output/Secrets.yaml --kubeconfig {{ kubeconfig }}

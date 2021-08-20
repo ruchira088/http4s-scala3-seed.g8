@@ -20,7 +20,7 @@ spec:
           image: ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }}
           envFrom:
             - configMapRef:
-                name: $name;format="normalize"$-config-map
+                name: $name;format="normalize"$-data-config-map
             - secretRef:
                 name: $name;format="normalize"$-secrets
           readinessProbe:

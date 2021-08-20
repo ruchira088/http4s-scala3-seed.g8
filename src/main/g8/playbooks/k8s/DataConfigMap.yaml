@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: $name;format="normalize"$-config-map
+  name: $name;format="normalize"$-data-config-map
   namespace: {{ namespace }}
 data:
 {% for key, value in config_values.items() %}

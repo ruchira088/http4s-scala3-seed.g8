@@ -14,6 +14,7 @@ services:
       #      - "~/.cache/coursier:/root/.cache/coursier" # Linux Coursier cache
       #      - "~/AppData/Local/Coursier/Cache:/root/.cache/coursier" # Windows Coursier cache
       - ".:/opt/$name;format="normalize"$"
+      - "./src/main/resources/logback.xml:/opt/data/logback.xml"
       - "/opt/$name;format="normalize"$/target"
       - "/opt/$name;format="normalize"$/project/target"
       - "/root/.sbt/1.0/plugins"

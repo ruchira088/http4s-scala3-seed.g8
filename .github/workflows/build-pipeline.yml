@@ -1,0 +1,64 @@
+name: Http4s Seed Build Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  compile-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          key: scala-seed-${{ hashFiles('**/build.properties') }}-${{ hashFiles('**/plugins.sbt') }}-${{ hashFiles('**/Dependencies.scala') }}
+          path: |
+            ~/.sbt
+            ~/.cache/coursier
+          restore-keys: |
+            scala-seed-${{ hashFiles('**/build.properties') }}-${{ hashFiles('**/plugins.sbt') }}
+            scala-seed-${{ hashFiles('**/build.properties') }}
+            scala-seed
+
+      - name: Create new sbt project from g8 template
+        run: sbt g8
+
+      - name: Execute test suite
+        run: cd target/g8 && sbt clean test
+
+      - name: Send successful Slack message
+        uses: slackapi/slack-github-action@v1.15.0
+        with:
+          channel-id: C02HYP398KS
+          slack-message: |
+            :white_check_mark: *SUCCESS*
+            *${{ github.repository }}*
+            *Branch:* ${{ github.ref }}
+            *Commit:* `${{ github.sha }}`
+            *Last Commit Message:* ${{ github.event.head_commit.message }}
+            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Send failure Slack message
+        if: failure()
+        uses: slackapi/slack-github-action@v1.15.0
+        with:
+          channel-id: C02HYP398KS
+          slack-message: |
+            :x: *FAILURE*
+            *${{ github.repository }}*
+            *Branch:* ${{ github.ref }}
+            *Commit:* `${{ github.sha }}`
+            *Last Commit Message:* ${{ github.event.head_commit.message }}
+            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

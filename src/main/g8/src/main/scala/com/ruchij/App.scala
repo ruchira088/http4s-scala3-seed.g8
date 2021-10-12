@@ -7,8 +7,6 @@ import com.ruchij.web.Routes
 import org.http4s.blaze.server.BlazeServerBuilder
 import pureconfig.ConfigSource
 
-import scala.concurrent.ExecutionContext
-
 object App extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
     for {
@@ -18,7 +16,7 @@ object App extends IOApp {
       healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
 
       _ <-
-        BlazeServerBuilder.apply[IO](ExecutionContext.global)
+        BlazeServerBuilder[IO]
           .withHttpApp(Routes(healthService))
           .bindHttp(serviceConfiguration.httpConfiguration.port, serviceConfiguration.httpConfiguration.host)
           .serve.compile.drain

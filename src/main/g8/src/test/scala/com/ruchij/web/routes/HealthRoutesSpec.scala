@@ -54,7 +54,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
 
       request = Request[IO](GET, uri"/service/info")
 
-      routes <- createRoutes()
+      routes = createRoutes()
 
       response <- routes.run(request)
 

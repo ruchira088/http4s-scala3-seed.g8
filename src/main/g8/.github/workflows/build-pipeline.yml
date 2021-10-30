@@ -46,13 +46,13 @@ jobs:
           channel-id: C02HYP398KS
           slack-message: |
             :white_check_mark: *SUCCESS*
-            *${{ github.repository }}*
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            *\${{ github.repository }}*
+            *Branch:* \${{ github.ref }}
+            *Commit:* `\${{ github.sha }}`
+            *Last Commit Message:* \${{ github.event.head_commit.message }}
+            *URL:* \${{ github.server_url}}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: \${{ secrets.SLACK_BOT_TOKEN }}
 
       - name: Send failure Slack message
         if: failure()
@@ -61,10 +61,10 @@ jobs:
           channel-id: C02HYP398KS
           slack-message: |
             :x: *FAILURE*
-            *${{ github.repository }}*
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            *\${{ github.repository }}*
+            *Branch:* \${{ github.ref }}
+            *Commit:* `\${{ github.sha }}`
+            *Last Commit Message:* \${{ github.event.head_commit.message }}
+            *URL:* \${{ github.server_url}}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: \${{ secrets.SLACK_BOT_TOKEN }}

@@ -22,6 +22,21 @@ case class Logger[A: ClassTag](typesafeLogger: TypesafeLogger) {
       typesafeLogger.error(errorMessage)
     }
 
+  def error[F[_]: Sync](errorMessage: String, throwable: Throwable): F[Unit] =
+    Sync[F].blocking {
+      typesafeLogger.error(errorMessage, throwable)
+    }
+
+  def debug[F[_]: Sync](debugMessage: String): F[Unit] =
+    Sync[F].blocking {
+      typesafeLogger.debug(debugMessage)
+    }
+
+  def trace[F[_]: Sync](traceMessage: String): F[Unit] =
+    Sync[F].blocking {
+      typesafeLogger.trace(traceMessage)
+    }
+
 }
 
 object Logger {

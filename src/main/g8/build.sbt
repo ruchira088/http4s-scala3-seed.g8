@@ -24,8 +24,7 @@ lazy val root =
       scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
       Universal / javaOptions ++= Seq("-Dlogback.configurationFile=/opt/data/logback.xml"),
       addCompilerPlugin(kindProjector),
-      addCompilerPlugin(betterMonadicFor),
-      addCompilerPlugin(scalaTypedHoles)
+      addCompilerPlugin(betterMonadicFor)
 )
 
 lazy val rootDependencies =

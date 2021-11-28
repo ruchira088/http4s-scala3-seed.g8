@@ -7,13 +7,13 @@
       import_tasks: tasks/git-info.yml
 
     - set_fact:
-        namespace: "{{ '$name;format="normalize"$' if git_branch == 'master' else '$name;format="normalize"$-' + git_branch }}"
+        namespace: "{{ '$name;format="normalize"$' if git_branch == 'main' else '$name;format="normalize"$-' + git_branch }}"
 
     - name: Render K8s resource files
       import_tasks: tasks/k8s-resource-files.yml
       vars:
         domain: $name;format="normalize"$.dev.ruchij.com
-        hostname: "{{ domain if git_branch == 'master' else git_branch + '.' + domain }}"
+        hostname: "{{ domain if git_branch == 'main' else git_branch + '.' + domain }}"
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml

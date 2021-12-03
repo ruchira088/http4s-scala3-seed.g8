@@ -71,18 +71,24 @@ workflows:
   http4s-seed:
     jobs:
       - build-and-test:
+          context:
+            - slack-webhook
           post-steps:
             - slack/status
 
       - build-and-publish-docker-image:
-          context: aws-credentials
+          context:
+            - aws-credentials
+            - slack-webhook
           requires:
             - build-and-test
           post-steps:
             - slack/status
 
       - deploy-to-k8s:
-          context: aws-credentials
+          context:
+            - aws-credentials
+            - slack-webhook
           requires:
             - build-and-publish-docker-image
           post-steps:
@@ -91,7 +97,9 @@ workflows:
   docker-ci:
     jobs:
       - build-ci-image:
-          context: aws-credentials
+          context:
+            - aws-credentials
+            - slack-webhook
           post-steps:
             - slack/status
     triggers:

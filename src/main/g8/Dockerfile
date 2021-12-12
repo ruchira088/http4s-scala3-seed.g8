@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk
+FROM openjdk:17-jdk-slim
 
 RUN apt-get update && \
     apt-get install apt-transport-https bc ca-certificates software-properties-common -y
@@ -13,7 +13,7 @@ WORKDIR /opt/$name;format="normalize"$
 
 COPY . .
 
-EXPOSE 5005
+EXPOSE 8000 5005
 
 ENTRYPOINT ["sbt", "-jvm-debug", "5005"]
 

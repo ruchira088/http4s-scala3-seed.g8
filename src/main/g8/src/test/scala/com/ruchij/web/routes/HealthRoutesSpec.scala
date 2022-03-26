@@ -19,7 +19,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
 
     val expectedJsonResponse =
       json"""{
-        "serviceName": "my-http4s-project",
+        "serviceName": "$name;format="normalize"$",
         "serviceVersion": "1.0.0",
         "organization": "com.ruchij",
         "scalaVersion": "2.13.6",
@@ -37,7 +37,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
           .returns {
             IO.pure {
               ServiceInformation(
-                "my-http4s-project",
+                "$name;format="normalize"$",
                 "1.0.0",
                 "com.ruchij",
                 "2.13.6",

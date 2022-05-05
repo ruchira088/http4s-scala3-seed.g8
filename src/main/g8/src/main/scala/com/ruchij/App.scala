@@ -15,12 +15,12 @@ object App extends IOApp {
 
       healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
 
-      _ <-
+      exitCode <-
         BlazeServerBuilder[IO]
           .withHttpApp(Routes(healthService))
           .bindHttp(serviceConfiguration.httpConfiguration.port, serviceConfiguration.httpConfiguration.host)
-          .serve.compile.drain
+          .serve.compile.lastOrError
 
     }
-    yield ExitCode.Success
+    yield exitCode
 }

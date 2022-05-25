@@ -3,8 +3,8 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.8"
-  val Http4sVersion = "0.23.11"
-  val CirceVersion = "0.14.1"
+  val Http4sVersion = "0.23.12"
+  val CirceVersion = "0.14.2"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -24,7 +24,7 @@ object Dependencies
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.11"
 
-  lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4"
+  lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full
 

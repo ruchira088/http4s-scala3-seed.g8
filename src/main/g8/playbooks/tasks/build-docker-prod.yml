@@ -24,7 +24,7 @@
   shell: |
     docker build \
       -f docker-output/Dockerfile \
-      -t $name;format="normalize"$:latest \
+      -t $name;format="normalize"$:{{ git_branch }} \
       -t $name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
       -t $name;format="normalize"$:{{ git_branch }}-{{ ansible_date_time.iso8601_basic_short }} \
       ../target/universal/

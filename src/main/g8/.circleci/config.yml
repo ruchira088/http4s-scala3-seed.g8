@@ -4,8 +4,8 @@ aliases:
   - &install-ansible
     name: Install Ansible
     command: |
-      sudo apt update && \
-      sudo apt install python3-pip -y && \
+      sudo apt-get update && \
+      sudo apt-get install python3-pip -y && \
       pip3 install boto3 botocore openshift ansible
 
 jobs:

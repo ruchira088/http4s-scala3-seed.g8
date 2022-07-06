@@ -6,7 +6,7 @@ services:
 #    build: .
     image: $name;format="normalize"$:main
     ports:
-      - 8000:8000
+      - 8080:8080
 #      - 5005:5005
     volumes:
       - "./src/main/resources/logback.xml:/opt/data/logback.xml"

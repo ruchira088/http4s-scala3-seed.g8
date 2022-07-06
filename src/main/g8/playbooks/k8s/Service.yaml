@@ -9,4 +9,4 @@ spec:
     branch: {{ git_branch }}
   ports:
     - name: http4s-port
-      port: 8000
+      port: 8080

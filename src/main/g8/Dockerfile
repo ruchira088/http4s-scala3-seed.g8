@@ -15,7 +15,7 @@ WORKDIR /opt/$name;format="normalize"$
 
 COPY . .
 
-EXPOSE 8000 5005
+EXPOSE 8080 5005
 
 ENTRYPOINT ["sbt", "-jvm-debug", "5005"]
 

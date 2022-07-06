@@ -1,3 +1,5 @@
 package com.ruchij.config
 
-case class HttpConfiguration(host: String, port: Int)
+import com.comcast.ip4s.{Host, Port}
+
+case class HttpConfiguration(host: Host, port: Port)

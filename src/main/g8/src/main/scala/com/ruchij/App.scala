@@ -4,7 +4,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 import com.ruchij.config.ServiceConfiguration
 import com.ruchij.services.health.HealthServiceImpl
 import com.ruchij.web.Routes
-import org.http4s.blaze.server.BlazeServerBuilder
+import org.http4s.ember.server.EmberServerBuilder
 import pureconfig.ConfigSource
 
 object App extends IOApp {
@@ -16,11 +16,14 @@ object App extends IOApp {
       healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
 
       exitCode <-
-        BlazeServerBuilder[IO]
+        EmberServerBuilder.default[IO]
           .withHttpApp(Routes(healthService))
-          .bindHttp(serviceConfiguration.httpConfiguration.port, serviceConfiguration.httpConfiguration.host)
-          .serve.compile.lastOrError
-
+          .withHost(serviceConfiguration.httpConfiguration.host)
+          .withPort(serviceConfiguration.httpConfiguration.port)
+          .withHttp2
+          .build
+          .use(_ => IO.never)
+          .as(ExitCode.Success)
     }
     yield exitCode
 }

@@ -1,6 +1,7 @@
 package com.ruchij.config
 
 import cats.effect.IO
+import com.comcast.ip4s.IpLiteralSyntax
 import com.ruchij.test.utils.IOUtils.{IOErrorOps, runIO}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.flatspec.AnyFlatSpec
@@ -34,7 +35,7 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
     ServiceConfiguration.parse[IO](configObjectSource).flatMap {
       serviceConfiguration =>
         IO.delay {
-          serviceConfiguration.httpConfiguration mustBe HttpConfiguration("127.0.0.1", 80)
+          serviceConfiguration.httpConfiguration mustBe HttpConfiguration(ipv4"127.0.0.1", port"80")
           serviceConfiguration.buildInformation mustBe
             BuildInformation(Some("my-branch"), None, Some(new DateTime(2021, 7, 31, 10, 10, 0, 0, DateTimeZone.UTC)))
         }

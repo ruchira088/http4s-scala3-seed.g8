@@ -106,7 +106,8 @@ jobs:
 
   deploy-to-k8s:
     runs-on: ubuntu-latest
-    needs: publish-docker-image
+    needs:
+      - publish-docker-image
 
     steps:
       - name: Checkout code
@@ -139,6 +140,20 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Send successful Slack message
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          channel-id: C02HYP398KS
+          slack-message: |
+            :white_check_mark: *SUCCESS*
+            *${{ github.repository }}*
+            *Branch:* ${{ github.ref }}
+            *Commit:* `${{ github.sha }}`
+            *Last Commit Message:* ${{ github.event.head_commit.message }}
+            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
       - name: Send failure Slack message
         if: failure()
         uses: slackapi/slack-github-action@v1.19.0
@@ -148,20 +163,6 @@ jobs:
             :x: *FAILURE*
             *${{ github.repository }}*
             *Job:* deploy-to-k8s
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-
-      - name: Send successful Slack message
-        uses: slackapi/slack-github-action@v1.19.0
-        with:
-          channel-id: C02HYP398KS
-          slack-message: |
-            :white_check_mark: *SUCCESS*
-            *${{ github.repository }}*
             *Branch:* ${{ github.ref }}
             *Commit:* `${{ github.sha }}`
             *Last Commit Message:* ${{ github.event.head_commit.message }}

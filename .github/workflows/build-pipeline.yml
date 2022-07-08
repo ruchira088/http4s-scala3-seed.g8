@@ -97,3 +97,6 @@ jobs:
 
       - name: Build and publish Docker image
         run: ansible-playbook target/g8/playbooks/build-and-publish-docker-image.yml
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

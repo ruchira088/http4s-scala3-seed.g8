@@ -3,6 +3,9 @@
   connection: local
 
   tasks:
+    - name: Install dependencies
+      import_tasks: tasks/install-dependencies.yml
+
     - name: Build Docker image
       import_tasks: tasks/build-docker-prod.yml
 

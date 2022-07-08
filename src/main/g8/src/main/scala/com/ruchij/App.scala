@@ -14,7 +14,7 @@ object App extends IOApp {
       serviceConfiguration <- ServiceConfiguration.parse[IO](configObjectSource)
 
       healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
-      HelloWorld
+
       exitCode <-
         EmberServerBuilder.default[IO]
           .withHttpApp(Routes(healthService))

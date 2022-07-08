@@ -88,8 +88,8 @@ jobs:
       - name: Build and publish Docker image
         run: ansible-playbook playbooks/build-and-publish-docker-image.yml
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: \${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Send failure Slack message
         if: failure()
@@ -119,8 +119,8 @@ jobs:
       - name: Deploy to K8s server
         run: playbooks/k8s-deploy.yml
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: \${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Send successful Slack message
         uses: slackapi/slack-github-action@v1.19.0
@@ -128,13 +128,13 @@ jobs:
           channel-id: C02HYP398KS
           slack-message: |
             :white_check_mark: *SUCCESS*
-            *${{ github.repository }}*
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            *\${{ github.repository }}*
+            *Branch:* \${{ github.ref }}
+            *Commit:* `\${{ github.sha }}`
+            *Last Commit Message:* \${{ github.event.head_commit.message }}
+            *URL:* \${{ github.server_url}}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: \${{ secrets.SLACK_BOT_TOKEN }}
 
       - name: Send failure Slack message
         if: failure()
@@ -143,11 +143,11 @@ jobs:
           channel-id: C02HYP398KS
           slack-message: |
             :x: *FAILURE*
-            *${{ github.repository }}*
+            *\${{ github.repository }}*
             *Job:* deploy-to-k8s
-            *Branch:* ${{ github.ref }}
-            *Commit:* `${{ github.sha }}`
-            *Last Commit Message:* ${{ github.event.head_commit.message }}
-            *URL:* ${{ github.server_url}}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            *Branch:* \${{ github.ref }}
+            *Commit:* `\${{ github.sha }}`
+            *Last Commit Message:* \${{ github.event.head_commit.message }}
+            *URL:* \${{ github.server_url}}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: \${{ secrets.SLACK_BOT_TOKEN }}

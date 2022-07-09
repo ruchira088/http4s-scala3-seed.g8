@@ -102,7 +102,7 @@ jobs:
           slack-message: |
             :x: *FAILURE*
             *${{ github.repository }}*
-            *Job:* publish-docker-image
+            *Job:* build-and-publish-docker-image
             *Branch:* ${{ github.ref }}
             *Commit:* `${{ github.sha }}`
             *Last Commit Message:* ${{ github.event.head_commit.message }}

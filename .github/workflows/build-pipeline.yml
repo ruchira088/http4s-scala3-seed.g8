@@ -1,7 +1,9 @@
 name: build pipeline
 
 on:
-  - push
+  push:
+    branches:
+      - "**"
 
 concurrency:
   group: ${{ github.ref }}

@@ -7,7 +7,6 @@
       import_tasks: tasks/install-dependencies.yml
 
     - name: Build Docker image
-      import_tasks: tasks/build-docker-prod.yml
-
-    - name: Publish Docker image
-      import_tasks: tasks/publish-docker-image.yml
+      import_tasks: tasks/build-and-publish-docker-image.yml
+      vars:
+        publish: true

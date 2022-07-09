@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Install dependencies
+      import_tasks: tasks/install-dependencies.yml
+
+    - set_fact:
+        access_token: "{{ lookup('aws_ssm', '/github/token', region='ap-southeast-2') }}"
+
+    - name: Create GitHub repository
+      community.general.github_repo:
+        name: $name;format="normalize"$
+        access_token: "{{ access_token }}"
+
+    - name: Fetch GitHub repository public key
+      uri:
+        url: https://api.github.com/repos/ruchira088/$name;format="normalize"$/actions/secrets/public-key
+        headers:
+          Accept: application/vnd.github+json
+          Authorization: token {{ access_token }}
+        status_code: 200
+      register: public_key_response
+
+    - set_fact:
+        public_key: "{{ public_key_response.json.key }}"
+        public_key_id: "{{ public_key_response.json.key_id }}"
+
+    - name: Encrypt secrets
+      block:
+        - name: Initialize npm project
+          command: npm install --prefix lib-sodium
+
+        - name: Add AWS_ACCESS_KEY_ID to GitHub secrets
+          import_tasks: tasks/add-github-secret.yml
+          vars:
+            aws_ssm_path: /github/aws/access-key-id
+            secret_name: AWS_ACCESS_KEY_ID
+
+        - name: Add AWS_SECRET_ACCESS_KEY to GitHub secrets
+          import_tasks: tasks/add-github-secret.yml
+          vars:
+            aws_ssm_path: /github/aws/secret-access-key
+            secret_name: AWS_SECRET_ACCESS_KEY
+
+        - name: Add SLACK_BOT_TOKEN to GitHub secrets
+          import_tasks: tasks/add-github-secret.yml
+          vars:
+            aws_ssm_path: /github/slack/bot-token
+            secret_name: SLACK_BOT_TOKEN

@@ -1,0 +1,13 @@
+{
+  "name": "lib-sodium",
+  "version": "0.0.1",
+  "description": "Library to encrypt secrets for GitHub Actions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "libsodium-wrappers": "^0.7.10",
+    "yargs": "^17.5.1"
+  }
+}

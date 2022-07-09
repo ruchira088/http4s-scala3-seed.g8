@@ -17,6 +17,7 @@
       vars:
         domain: $name;format="normalize"$.dev.ruchij.com
         hostname: "{{ domain if git_branch == 'main' or git_branch == 'master' else git_branch + '.' + domain }}"
+        ghcr_credentials: "{{ lookup('aws_ssm', '/github/ghcr/docker-config', region='ap-southeast-2') }}"
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml
@@ -25,6 +26,9 @@
       block:
         - name: Create Namespace
           command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig {{ kubeconfig }}
+
+        - name: Create Docker registry secret
+          command: kubectl apply -f k8s-output/DockerRegistryCredentials.yaml --kubeconfig {{ kubeconfig }}
 
         - name: Create data ConfigMap
           command: kubectl apply -f k8s-output/DataConfigMap.yaml --kubeconfig {{ kubeconfig }}

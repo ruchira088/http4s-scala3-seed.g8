@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: $name;format="normalize"$-container
-          image: ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }}
+          image: ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }}
           envFrom:
             - configMapRef:
                 name: $name;format="normalize"$-data-config-map
@@ -56,4 +56,6 @@ spec:
         - name: file-config-map
           configMap:
             name: $name;format="normalize"$-file-config-map
+      imagePullSecrets:
+        - name: docker-registry-credentials
 

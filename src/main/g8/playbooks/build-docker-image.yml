@@ -3,5 +3,7 @@
   connection: local
 
   tasks:
-    - name: Build Docker-Compose image
-      import_tasks: tasks/build-docker-prod.yml
+    - name: Build Docker image
+      import_tasks: tasks/build-and-publish-docker-image.yml
+      vars:
+        publish: false

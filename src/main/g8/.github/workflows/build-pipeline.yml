@@ -1,8 +1,7 @@
-name: $name;format="normalize"$-build-pipeline
+name: build-pipeline
 
 on:
   - push
-  - pull_request
 
 jobs:
   compile-and-test:

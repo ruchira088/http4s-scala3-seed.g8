@@ -1,8 +1,7 @@
-name: Http4s Seed Build Pipeline
+name: build pipeline
 
 on:
   - push
-  - pull_request
 
 jobs:
   compile-and-test:

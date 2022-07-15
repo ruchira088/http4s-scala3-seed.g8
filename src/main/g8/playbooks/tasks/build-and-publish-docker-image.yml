@@ -23,9 +23,9 @@
 - name: Build Docker image
   shell: |
     docker build \
+      -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }} \
+      -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
       -f docker-output/Dockerfile \
-      -t $name;format="normalize"$:{{ git_branch }} \
-      -t $name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
       ../target/universal/
   when: not publish
 

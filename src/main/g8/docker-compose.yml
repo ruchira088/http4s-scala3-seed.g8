@@ -4,7 +4,7 @@ services:
 
   $name;format="normalize"$:
 #    build: .
-    image: $name;format="normalize"$:main
+    image: ghcr.io/ruchira088/$name;format="normalize"$:main
     ports:
       - 8080:8080
 #      - 5005:5005

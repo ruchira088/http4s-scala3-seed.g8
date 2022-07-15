@@ -20,7 +20,6 @@ object App extends IOApp {
           .withHttpApp(Routes(healthService))
           .withHost(serviceConfiguration.httpConfiguration.host)
           .withPort(serviceConfiguration.httpConfiguration.port)
-          .withHttp2
           .build
           .use(_ => IO.never)
           .as(ExitCode.Success)

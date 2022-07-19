@@ -133,14 +133,14 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          key: http4s-seed-${{ runner.os }}-${{ hashFiles('**/build.properties') }}-${{ hashFiles('**/plugins.sbt') }}-${{ hashFiles('**/Dependencies.scala') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/build.properties') }}-${{ hashFiles('**/plugins.sbt') }}-${{ hashFiles('**/Dependencies.scala') }}
           path: |
             ~/.sbt
             ~/.cache/coursier
           restore-keys: |
-            http4s-seed-${{ runner.os }}-${{ hashFiles('**/build.properties') }}-${{ hashFiles('**/plugins.sbt') }}
-            http4s-seed-${{ runner.os }}-${{ hashFiles('**/build.properties') }}
-            http4s-seed-${{ runner.os }}
+            ${{ runner.os }}-${{ hashFiles('**/build.properties') }}-${{ hashFiles('**/plugins.sbt') }}
+            ${{ runner.os }}-${{ hashFiles('**/build.properties') }}
+            ${{ runner.os }}
 
       - name: Create new sbt project from g8 template
         run: sbt g8

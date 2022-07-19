@@ -87,14 +87,14 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          key: $name;format="normalize"$-\${{ runner.os }}-\${{ hashFiles('**/build.properties') }}-\${{ hashFiles('**/plugins.sbt') }}-\${{ hashFiles('**/Dependencies.scala') }}
+          key: \${{ runner.os }}-\${{ hashFiles('**/build.properties') }}-\${{ hashFiles('**/plugins.sbt') }}-\${{ hashFiles('**/Dependencies.scala') }}
           path: |
             ~/.sbt
             ~/.cache/coursier
           restore-keys: |
-            $name;format="normalize"$-\${{ runner.os }}-\${{ hashFiles('**/build.properties') }}-\${{ hashFiles('**/plugins.sbt') }}
-            $name;format="normalize"$-\${{ runner.os }}-\${{ hashFiles('**/build.properties') }}
-            $name;format="normalize"$-\${{ runner.os }}
+            \${{ runner.os }}-\${{ hashFiles('**/build.properties') }}-\${{ hashFiles('**/plugins.sbt') }}
+            \${{ runner.os }}-\${{ hashFiles('**/build.properties') }}
+            \${{ runner.os }}
 
       - name: Build and publish Docker image
         run: ansible-playbook playbooks/build-and-publish-docker-image.yml

@@ -5,16 +5,22 @@ services:
   $name;format="normalize"$:
 #    build: .
     image: ghcr.io/ruchira088/$name;format="normalize"$:main
+    healthcheck:
+      test: "/opt/scripts/wait-for-it.sh localhost:8080"
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
     ports:
       - 8080:8080
 #      - 5005:5005
     volumes:
-      - "./src/main/resources/logback.xml:/opt/data/logback.xml"
-#      - "~/.sbt:/root/.sbt"
-#      - "~/Library/Caches/Coursier:/root/.cache/coursier" # MacOS Coursier cache
-#      #      - "~/.cache/coursier:/root/.cache/coursier" # Linux Coursier cache
-#      #      - "~/AppData/Local/Coursier/Cache:/root/.cache/coursier" # Windows Coursier cache
-#      - ".:/opt/$name;format="normalize"$"
-#      - "/opt/$name;format="normalize"$/target"
-#      - "/opt/$name;format="normalize"$/project/target"
-#      - "/root/.sbt/1.0/plugins"
+      - ./src/main/resources/logback.xml:/opt/data/logback.xml
+      - ./docker-compose/scripts:/opt/scripts
+#      - ~/.sbt:/root/.sbt
+#      - ~/Library/Caches/Coursier:/root/.cache/coursier # MacOS Coursier cache
+#      #      - ~/.cache/coursier:/root/.cache/coursier # Linux Coursier cache
+#      #      - ~/AppData/Local/Coursier/Cache:/root/.cache/coursier # Windows Coursier cache
+#      - .:/opt/$name;format="normalize"$
+#      - /opt/$name;format="normalize"$/target
+#      - /opt/$name;format="normalize"$/project/target
+#      - /root/.sbt/1.0/plugins

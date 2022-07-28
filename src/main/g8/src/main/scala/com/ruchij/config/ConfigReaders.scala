@@ -5,7 +5,6 @@ import org.joda.time.DateTime
 import pureconfig.ConfigReader
 import pureconfig.error.CannotConvert
 
-import scala.reflect.{ClassTag, classTag}
 import scala.util.Try
 
 object ConfigReaders {

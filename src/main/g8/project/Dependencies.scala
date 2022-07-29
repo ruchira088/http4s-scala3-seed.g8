@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.8"
-  val Http4sVersion = "0.23.13"
+  val Http4sVersion = "0.23.14"
   val CirceVersion = "0.14.2"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion

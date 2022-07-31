@@ -2,6 +2,9 @@
 - hosts: localhost
   connection: local
 
+  vars:
+    repo_name: $name;format="normalize"$
+
   tasks:
     - name: Install dependencies
       import_tasks: tasks/install-dependencies.yml
@@ -11,12 +14,12 @@
 
     - name: Create GitHub repository
       community.general.github_repo:
-        name: $name;format="normalize"$
+        name: "{{ repo_name }}"
         access_token: "{{ access_token }}"
 
     - name: Fetch GitHub repository public key
       uri:
-        url: https://api.github.com/repos/ruchira088/$name;format="normalize"$/actions/secrets/public-key
+        url: https://api.github.com/repos/ruchira088/{{ repo_name }}/actions/secrets/public-key
         headers:
           Accept: application/vnd.github+json
           Authorization: token {{ access_token }}

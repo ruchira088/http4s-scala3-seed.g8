@@ -9,7 +9,7 @@ package object requests {
 
   implicit class RequestOps[F[_]](request: Request[F]) {
     def to[A](
-      implicit validator: Validator[F, A],
+      using validator: Validator[F, A],
       entityDecoder: EntityDecoder[F, A],
       monadThrow: MonadThrow[F]
     ): F[A] =

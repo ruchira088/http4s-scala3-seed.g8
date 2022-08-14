@@ -21,10 +21,8 @@ lazy val root =
       buildInfoKeys := Seq[BuildInfoKey](name, organization, version, scalaVersion, sbtVersion),
       buildInfoPackage := "com.eed3si9n.ruchij",
       topLevelDirectory := None,
-      scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint", "-Wconf:cat=lint-byname-implicit:s"),
-      Universal / javaOptions ++= Seq("-Dlogback.configurationFile=/opt/data/logback.xml"),
-      addCompilerPlugin(kindProjector),
-      addCompilerPlugin(betterMonadicFor)
+      scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
+      Universal / javaOptions ++= Seq("-Dlogback.configurationFile=/opt/data/logback.xml")
 )
 
 lazy val rootDependencies =
@@ -42,7 +40,7 @@ lazy val rootDependencies =
   )
 
 lazy val rootTestDependencies =
-  Seq(scalaTest, scalaMock, pegdown)
+  Seq(scalaTest, pegdown)
 
 val verifyReleaseBranch = { state: State =>
   val git = Git.mkVcs(state.extract.get(baseDirectory))

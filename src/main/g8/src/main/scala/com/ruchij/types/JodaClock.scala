@@ -2,7 +2,7 @@ package com.ruchij.types
 
 import cats.Applicative
 import cats.effect.{Clock, Sync}
-import cats.implicits._
+import cats.implicits.*
 import org.joda.time.DateTime
 
 trait JodaClock[F[_]] {

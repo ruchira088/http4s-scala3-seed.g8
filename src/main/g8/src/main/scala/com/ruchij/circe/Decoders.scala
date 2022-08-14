@@ -6,6 +6,6 @@ import org.joda.time.DateTime
 import scala.util.Try
 
 object Decoders {
-  implicit val dateTimeDecoder: Decoder[DateTime] =
+  given Decoder[DateTime] =
     Decoder.decodeString.emapTry(dateTimeString => Try(DateTime.parse(dateTimeString)))
 }

@@ -2,9 +2,9 @@ package com.ruchij.web.middleware
 
 import cats.effect.IO
 import com.ruchij.exceptions.ResourceNotFoundException
-import com.ruchij.test.matchers._
+import com.ruchij.test.matchers.*
 import com.ruchij.test.utils.IOUtils.runIO
-import io.circe.literal.JsonStringContext
+import io.circe.literal.json
 import org.http4s.{HttpApp, Request, Response, Status}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
@@ -23,7 +23,8 @@ class ExceptionHandlerSpec extends AnyFlatSpec with Matchers {
         "errorMessages": [ "Unable to find test resource" ]
       }"""
 
-    httpApp.run(Request())
+    httpApp
+      .run(Request())
       .flatMap { response =>
         IO.delay {
           response must beJsonContentType
@@ -46,7 +47,8 @@ class ExceptionHandlerSpec extends AnyFlatSpec with Matchers {
         "errorMessages": [ "Unexpected exception occurred" ]
       }"""
 
-    httpApp.run(Request())
+    httpApp
+      .run(Request())
       .flatMap { response =>
         IO.delay {
           response must beJsonContentType

@@ -1,7 +1,7 @@
 package com.ruchij.services.health
 
 import cats.effect.Sync
-import cats.implicits._
+import cats.implicits.*
 import com.ruchij.config.BuildInformation
 import com.ruchij.services.health.models.ServiceInformation
 import com.ruchij.types.JodaClock

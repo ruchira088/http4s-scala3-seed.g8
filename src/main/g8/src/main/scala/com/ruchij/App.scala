@@ -15,14 +15,13 @@ object App extends IOApp {
 
       healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
 
-      exitCode <-
-        EmberServerBuilder.default[IO]
-          .withHttpApp(Routes(healthService))
-          .withHost(serviceConfiguration.httpConfiguration.host)
-          .withPort(serviceConfiguration.httpConfiguration.port)
-          .build
-          .use(_ => IO.never)
-          .as(ExitCode.Success)
-    }
-    yield exitCode
+      exitCode <- EmberServerBuilder
+        .default[IO]
+        .withHttpApp(Routes(healthService))
+        .withHost(serviceConfiguration.httpConfiguration.host)
+        .withPort(serviceConfiguration.httpConfiguration.port)
+        .build
+        .use(_ => IO.never)
+        .as(ExitCode.Success)
+    } yield exitCode
 }

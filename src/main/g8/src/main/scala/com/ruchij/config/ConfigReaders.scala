@@ -8,7 +8,7 @@ import pureconfig.error.CannotConvert
 import scala.util.Try
 
 object ConfigReaders {
-  implicit val dateTimeConfigReader: ConfigReader[DateTime] =
+  given ConfigReader[DateTime] =
     ConfigReader.fromNonEmptyString {
       input =>
         Try(DateTime.parse(input)).toEither.left.map {
@@ -16,7 +16,7 @@ object ConfigReaders {
         }
     }
 
-  implicit val hostConfigReader: ConfigReader[Host] = ConfigReader.fromNonEmptyStringOpt(Host.fromString)
+  given ConfigReader[Host] = ConfigReader.fromNonEmptyStringOpt(Host.fromString)
 
-  implicit val portConfigReader: ConfigReader[Port] = ConfigReader.fromNonEmptyStringOpt(Port.fromString)
+  given ConfigReader[Port] = ConfigReader.fromNonEmptyStringOpt(Port.fromString)
 }

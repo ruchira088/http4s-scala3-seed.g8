@@ -22,8 +22,9 @@ case class ServiceInformation(
 )
 
 object ServiceInformation {
-  def create[F[_] : Sync](timestamp: DateTime, buildInformation: BuildInformation): F[ServiceInformation] =
-    Sync[F].delay(Properties.javaVersion)
+  def create[F[_]: Sync](timestamp: DateTime, buildInformation: BuildInformation): F[ServiceInformation] =
+    Sync[F]
+      .delay(Properties.javaVersion)
       .map { javaVersion =>
         ServiceInformation(
           BuildInfo.name,

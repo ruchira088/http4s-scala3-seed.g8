@@ -10,7 +10,6 @@ import org.http4s.Method.GET
 import org.http4s.syntax.all.uri
 import org.http4s.{Request, Status}
 import org.joda.time.{DateTime, DateTimeZone}
-import org.mockito.Mockito
 import org.mockito.Mockito.when
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers

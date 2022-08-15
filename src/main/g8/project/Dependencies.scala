@@ -28,5 +28,7 @@ object Dependencies
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.13"
 
+  lazy val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-6" % "3.2.13.0"
+
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }

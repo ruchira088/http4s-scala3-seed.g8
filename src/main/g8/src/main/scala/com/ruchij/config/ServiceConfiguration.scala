@@ -3,7 +3,7 @@ package com.ruchij.config
 import cats.ApplicativeError
 import com.ruchij.config.BuildInformation
 import com.ruchij.config.ConfigReaders.given
-import com.ruchij.types.FunctionKTypes.{given, *}
+import com.ruchij.types.FunctionKTypes.{toType, given}
 import pureconfig.error.ConfigReaderException
 import pureconfig.generic.derivation.default.*
 import pureconfig.{ConfigObjectSource, ConfigReader}

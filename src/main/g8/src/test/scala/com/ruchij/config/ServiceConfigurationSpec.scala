@@ -2,7 +2,7 @@ package com.ruchij.config
 
 import cats.effect.IO
 import com.comcast.ip4s.{ipv4, port}
-import com.ruchij.test.utils.IOUtils.{IOErrorOps, runIO}
+import com.ruchij.test.utils.IOUtils.{error, runIO}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers

@@ -10,9 +10,9 @@ trait JodaClock[F[_]] {
 }
 
 object JodaClock {
-  def apply[F[_]](implicit jodaClock: JodaClock[F]): JodaClock[F] = jodaClock
+  def apply[F[_]](using jodaClock: JodaClock[F]): JodaClock[F] = jodaClock
 
-  implicit def fromClock[F[_]: Applicative: Clock]: JodaClock[F] =
+  given fromClock[F[_]: Applicative: Clock]: JodaClock[F] =
     new JodaClock[F] {
       override val timestamp: F[DateTime] =
         Clock[F].realTime.map(duration => new DateTime(duration.toMillis))

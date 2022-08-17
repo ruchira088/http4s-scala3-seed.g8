@@ -2,7 +2,7 @@ package com.ruchij.test.utils
 
 import cats.effect.Sync
 import cats.implicits.*
-import com.ruchij.types.FunctionKTypes.{given, *}
+import com.ruchij.types.FunctionKTypes.{toType, given}
 import io.circe.Json
 import io.circe.{parser => JsonParser}
 import org.http4s.Response

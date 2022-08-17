@@ -47,7 +47,7 @@ class HealthRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
                 Some("my-branch"),
                 Some("my-commit"),
                 None,
-                new DateTime(2021, 8, 4, 10, 10, 0, 0, DateTimeZone.UTC)
+                DateTime(2021, 8, 4, 10, 10, 0, 0, DateTimeZone.UTC)
               )
             }
           }

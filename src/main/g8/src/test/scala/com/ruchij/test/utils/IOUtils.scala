@@ -11,7 +11,7 @@ object IOUtils {
     def error: IO[Throwable] =
       io.attempt.flatMap {
         case Left(throwable) => IO.pure(throwable)
-        case Right(success) => IO.raiseError(new IllegalStateException(s"Expected an exception, but returned \$success"))
+        case Right(success) => IO.raiseError(IllegalStateException(s"Expected an exception, but returned \$success"))
       }
   }
 

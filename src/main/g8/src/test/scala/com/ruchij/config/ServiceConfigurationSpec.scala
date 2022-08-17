@@ -37,7 +37,7 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
         IO.delay {
           serviceConfiguration.httpConfiguration mustBe HttpConfiguration(ipv4"127.0.0.1", port"80")
           serviceConfiguration.buildInformation mustBe
-            BuildInformation(Some("my-branch"), None, Some(new DateTime(2021, 7, 31, 10, 10, 0, 0, DateTimeZone.UTC)))
+            BuildInformation(Some("my-branch"), None, Some(DateTime(2021, 7, 31, 10, 10, 0, 0, DateTimeZone.UTC)))
         }
     }
   }

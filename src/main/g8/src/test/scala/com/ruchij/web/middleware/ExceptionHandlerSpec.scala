@@ -38,7 +38,7 @@ class ExceptionHandlerSpec extends AnyFlatSpec with Matchers {
     val httpApp: HttpApp[IO] =
       ExceptionHandler {
         HttpApp { _ =>
-          IO.raiseError[Response[IO]](new Exception("Unexpected exception occurred"))
+          IO.raiseError[Response[IO]](Exception("Unexpected exception occurred"))
         }
       }
 

@@ -15,7 +15,7 @@ object JodaClock {
   given fromClock[F[_]: Applicative: Clock]: JodaClock[F] =
     new JodaClock[F] {
       override val timestamp: F[DateTime] =
-        Clock[F].realTime.map(duration => new DateTime(duration.toMillis))
+        Clock[F].realTime.map(duration => DateTime(duration.toMillis))
     }
 
   def create[F[_]: Sync]: JodaClock[F] = JodaClock.fromClock[F]

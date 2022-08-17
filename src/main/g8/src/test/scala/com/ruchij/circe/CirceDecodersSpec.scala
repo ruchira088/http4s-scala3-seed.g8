@@ -10,7 +10,7 @@ class CirceDecodersSpec extends AnyFlatSpec with Matchers {
 
   "dateTimeDecoder" should "decode the date time string" in {
     Decoder[DateTime].decodeJson(Json.fromString("2021-09-12T08:41:21.288Z")) mustBe
-      Right(new DateTime(2021, 9, 12, 8, 41, 21, 288, DateTimeZone.UTC))
+      Right(DateTime(2021, 9, 12, 8, 41, 21, 288, DateTimeZone.UTC))
   }
 
   it should "return a failure when invalid input" in {

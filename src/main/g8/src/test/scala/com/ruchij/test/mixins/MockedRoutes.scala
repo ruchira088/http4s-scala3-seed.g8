@@ -13,7 +13,7 @@ trait MockedRoutes[F[_]] extends MockitoSugar with OneInstancePerTest {  self: S
 
   val sync: Sync[F]
 
-  def createRoutes(): HttpApp[F] =
+  def createRoutes: HttpApp[F] =
     Routes[F](healthService)(sync)
 
 }

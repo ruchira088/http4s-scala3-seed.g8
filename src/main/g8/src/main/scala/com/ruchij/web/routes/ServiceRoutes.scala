@@ -9,7 +9,7 @@ import org.http4s.HttpRoutes
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
 
-object HealthRoutes {
+object ServiceRoutes {
   def apply[F[_]: Sync](healthService: HealthService[F])(using dsl: Http4sDsl[F]): HttpRoutes[F] = {
     import dsl.*
 

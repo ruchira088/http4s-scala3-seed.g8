@@ -5,7 +5,7 @@ import com.typesafe.scalalogging.Logger as TypesafeLogger
 
 import scala.reflect.ClassTag
 
-case class Logger(typesafeLogger: TypesafeLogger) {
+final case class Logger(typesafeLogger: TypesafeLogger) {
 
   def info[F[_]: Sync](infoMessage: String): F[Unit] =
     Sync[F].blocking {

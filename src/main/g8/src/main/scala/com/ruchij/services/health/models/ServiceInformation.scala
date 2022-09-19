@@ -3,7 +3,6 @@ package com.ruchij.services.health.models
 import cats.effect.Sync
 import cats.implicits.toFunctorOps
 import com.eed3si9n.ruchij.BuildInfo
-import com.ruchij.config.BuildInformation
 import org.joda.time.DateTime
 
 import scala.util.Properties
@@ -17,12 +16,12 @@ final case class ServiceInformation(
   javaVersion: String,
   gitBranch: Option[String],
   gitCommit: Option[String],
-  buildTimestamp: Option[DateTime],
+  buildTimestamp: DateTime,
   timestamp: DateTime
 )
 
 object ServiceInformation {
-  def create[F[_]: Sync](timestamp: DateTime, buildInformation: BuildInformation): F[ServiceInformation] =
+  def create[F[_]: Sync](timestamp: DateTime): F[ServiceInformation] =
     Sync[F]
       .delay(Properties.javaVersion)
       .map { javaVersion =>
@@ -33,9 +32,9 @@ object ServiceInformation {
           BuildInfo.scalaVersion,
           BuildInfo.sbtVersion,
           javaVersion,
-          buildInformation.gitBranch,
-          buildInformation.gitCommit,
-          buildInformation.buildTimestamp,
+          BuildInfo.gitBranch,
+          BuildInfo.gitCommit,
+          new DateTime(BuildInfo.buildTimestamp.toEpochMilli),
           timestamp
         )
       }

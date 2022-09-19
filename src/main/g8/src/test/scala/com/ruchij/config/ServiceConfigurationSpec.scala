@@ -21,14 +21,6 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
             port = 80
             port = \$\${?HTTP_PORT}
           }
-
-          build-information {
-            git-branch = "my-branch"
-
-            git-commit = \$\${?GIT_COMMIT}
-
-            build-timestamp = "2021-07-31T10:10:00.000Z"
-          }
         """
       }
 
@@ -36,8 +28,6 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
       serviceConfiguration =>
         IO.delay {
           serviceConfiguration.httpConfiguration mustBe HttpConfiguration(ipv4"127.0.0.1", port"80")
-          serviceConfiguration.buildInformation mustBe
-            BuildInformation(Some("my-branch"), None, Some(DateTime(2021, 7, 31, 10, 10, 0, 0, DateTimeZone.UTC)))
         }
     }
   }
@@ -49,13 +39,7 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
           http-configuration {
             host = "0.0.0.0"
 
-            port = 8080
-          }
-
-          build-information {
-            git-branch = "my-branch"
-
-            build-timestamp = "invalid-date"
+            port = my-invalid-port
           }
         """
       }
@@ -63,7 +47,7 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
     ServiceConfiguration.parse[IO](configObjectSource).error
       .flatMap { throwable =>
         IO.delay {
-          throwable.getMessage must include("Cannot convert 'invalid-date' to DateTime: Invalid format: \"invalid-date\"")
+          throwable.getMessage must include("Cannot convert 'my-invalid-port' to com.comcast.ip4s.Port")
         }
       }
   }

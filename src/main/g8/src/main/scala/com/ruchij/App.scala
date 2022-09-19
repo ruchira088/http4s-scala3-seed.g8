@@ -13,7 +13,7 @@ object App extends IOApp {
       configObjectSource <- IO.delay(ConfigSource.defaultApplication)
       serviceConfiguration <- ServiceConfiguration.parse[IO](configObjectSource)
 
-      healthService = HealthServiceImpl[IO](serviceConfiguration.buildInformation)
+      healthService = HealthServiceImpl[IO]
 
       exitCode <- EmberServerBuilder
         .default[IO]

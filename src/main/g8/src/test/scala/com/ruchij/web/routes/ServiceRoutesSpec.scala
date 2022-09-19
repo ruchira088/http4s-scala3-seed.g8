@@ -28,8 +28,8 @@ class ServiceRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
         "javaVersion": "17.0.4",
         "gitBranch" : "my-branch",
         "gitCommit" : "my-commit",
-        "buildTimestamp" : null,
-        "timestamp": "2021-08-04T10:10:00.000Z"
+        "buildTimestamp" : "2022-03-12T13:42:12.000Z",
+        "timestamp": "2022-08-04T10:10:00.000Z"
       }"""
 
     for {
@@ -46,8 +46,8 @@ class ServiceRoutesSpec extends AnyFlatSpec with Matchers with MockedRoutesIO {
                 "17.0.4",
                 Some("my-branch"),
                 Some("my-commit"),
-                None,
-                DateTime(2021, 8, 4, 10, 10, 0, 0, DateTimeZone.UTC)
+                DateTime(2022, 3, 12, 13, 42, 12, 0, DateTimeZone.UTC),
+                DateTime(2022, 8, 4, 10, 10, 0, 0, DateTimeZone.UTC)
               )
             }
           }

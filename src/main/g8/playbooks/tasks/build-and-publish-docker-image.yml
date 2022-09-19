@@ -2,30 +2,18 @@
   debug:
     msg: Started building $name;format="normalize"$
 
-- name: Create output directory
-  file:
-    path: docker-output
-    state: directory
-
 - name: Clean and build sbt project
   shell: cd ../ && sbt clean Universal/packageZipTarball
 
 - name: Gather git information
   import_tasks: git-info.yml
 
-- name: Generate the Dockerfile
-  template:
-    src: docker/Dockerfile-prod.j2
-    dest: docker-output/Dockerfile
-  vars:
-    build_timestamp: "{{ ansible_date_time.iso8601 }}"
-
 - name: Build Docker image
   shell: |
     docker build \
       -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }} \
       -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
-      -f docker-output/Dockerfile \
+      -f docker/Dockerfile \
       ../target/universal/
   when: not publish
 
@@ -44,7 +32,7 @@
           --platform linux/arm64,linux/amd64 \
           -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }} \
           -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
-          -f docker-output/Dockerfile \
+          -f docker/Dockerfile \
           ../target/universal/
 
 - name: Clean up output directory

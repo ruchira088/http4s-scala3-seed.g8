@@ -35,11 +35,6 @@
           -f docker/Dockerfile \
           ../target/universal/
 
-- name: Clean up output directory
-  file:
-    path: docker-output
-    state: absent
-
 - name: Print finish message
   debug:
     msg: Completed building $name;format="normalize"$

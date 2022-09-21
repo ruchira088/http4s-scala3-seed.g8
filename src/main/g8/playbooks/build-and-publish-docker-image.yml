@@ -3,10 +3,26 @@
   connection: local
 
   tasks:
+    - name: Gather git information
+      import_tasks: tasks/git-info.yml
+
     - name: Install dependencies
       import_tasks: tasks/install-dependencies.yml
 
-    - name: Build Docker image
-      import_tasks: tasks/build-and-publish-docker-image.yml
+    - name: Clean and build sbt project
+      shell: cd ../ && sbt clean Universal/packageZipTarball
+
+    - name: Login to GitHub container registry
+      command: docker login ghcr.io -u USERNAME -p {{ access_token }}
       vars:
-        publish: true
+        access_token: "{{ lookup('aws_ssm', '/github/packages/read-write-token', region='ap-southeast-2') }}"
+
+    - name: Build and publish Docker image
+      shell: |
+        docker buildx build \
+          --push \
+          --platform linux/arm64,linux/amd64 \
+          -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }} \
+          -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
+          -f docker/Dockerfile \
+          ../target/universal/

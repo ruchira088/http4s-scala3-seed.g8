@@ -3,7 +3,16 @@
   connection: local
 
   tasks:
+    - name: Gather git information
+      import_tasks: tasks/git-info.yml
+
+    - name: Clean and build sbt project
+      shell: cd ../ && sbt clean Universal/packageZipTarball
+
     - name: Build Docker image
-      import_tasks: tasks/build-and-publish-docker-image.yml
-      vars:
-        publish: false
+      shell: |
+        docker build \
+          -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }} \
+          -t ghcr.io/ruchira088/$name;format="normalize"$:{{ git_branch }}-{{ git_commit }} \
+          -f docker/Dockerfile \
+          ../target/universal/

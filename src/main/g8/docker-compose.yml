@@ -1,6 +1,22 @@
 version: "3.8"
 
 services:
+  nginx:
+    image: nginx:stable-alpine
+    depends_on:
+      $name;format="normalize"$:
+        condition: service_healthy
+    ports:
+      - 443:443
+    healthcheck:
+      test: "/opt/scripts/wait-for.sh -t 3 localhost:443"
+      start_period: 3s
+      interval: 3s
+      timeout: 2s
+    volumes:
+      - "./nginx/ssl:/etc/ssl"
+      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./docker-compose/scripts:/opt/scripts"
 
   $name;format="normalize"$:
 #    build: .

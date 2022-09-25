@@ -1,11 +1,25 @@
-- name: Get the git commit tag
-  command: git rev-parse --short HEAD
-  register: git_commit_output
+- name: Check if git repository
+  stat:
+    path: ../.git
+  register: stat_result
 
-- name: Get the git branch name
-  shell: git rev-parse --abbrev-ref HEAD | tr "[:upper:]" "[:lower:]" | tr " /" "-"
-  register: git_branch_output
+- name: Gather git information
+  when: stat_result.stat.exists
+  block:
+    - name: Get the git commit tag
+      command: git rev-parse --short HEAD
+      register: git_commit_output
 
-- set_fact:
-    git_commit: "{{ git_commit_output.stdout }}"
-    git_branch: "{{ git_branch_output.stdout }}"
+    - name: Get the git branch name
+      shell: git rev-parse --abbrev-ref HEAD | tr "[:upper:]" "[:lower:]" | tr " /" "-"
+      register: git_branch_output
+
+    - set_fact:
+        git_commit: "{{ git_commit_output.stdout }}"
+        git_branch: "{{ git_branch_output.stdout }}"
+
+- name: Populate placeholder git values
+  when: not stat_result.stat.exists
+  set_fact:
+    git_commit: commit
+    git_branch: main

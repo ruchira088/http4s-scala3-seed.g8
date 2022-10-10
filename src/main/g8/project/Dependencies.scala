@@ -22,7 +22,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.1"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.3"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.4"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 

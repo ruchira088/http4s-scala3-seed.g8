@@ -110,15 +110,6 @@ releaseProcess := Seq(
   pushChanges
 )
 
-val viewCoverageResults = taskKey[Unit]("Opens the coverage result in the default browser")
-
-viewCoverageResults := {
-  val coverageResults =
-    target.value.toPath.resolve(s"scala-\${scalaBinaryVersion.value}/scoverage-report/index.html")
-
-  Desktop.getDesktop.browse(coverageResults.toUri)
-}
-
 def runGitCommand(command: String): Option[String] = {
   val gitFolder = new File(".git")
 
@@ -127,4 +118,3 @@ def runGitCommand(command: String): Option[String] = {
 
 addCommandAlias("cleanCompile", "clean; compile;")
 addCommandAlias("cleanTest", "clean; test;")
-addCommandAlias("testWithCoverage", "clean; coverageOn; test; coverageAggregate; coverageOff; viewCoverageResults;")

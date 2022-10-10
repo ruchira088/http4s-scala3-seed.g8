@@ -3,7 +3,6 @@ import sbtrelease.Git
 import sbtrelease.ReleaseStateTransformations._
 import sbtrelease.Utilities.stateW
 
-import java.awt.Desktop
 import java.time.Instant
 import scala.sys.process._
 import scala.util.Try

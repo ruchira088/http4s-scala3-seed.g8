@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "3.2.0"
+  val ScalaVersion = "3.2.1"
   val Http4sVersion = "0.23.16"
   val CirceVersion = "0.14.3"
 
@@ -20,7 +20,7 @@ object Dependencies
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.12.1"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.1"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.2"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.4"
 

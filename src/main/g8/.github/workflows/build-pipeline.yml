@@ -49,7 +49,7 @@ jobs:
 
       - name: Send failure Slack message
         if: failure()
-        uses: slackapi/slack-github-action@v1.22.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: C02HYP398KS
           slack-message: |
@@ -104,7 +104,7 @@ jobs:
 
       - name: Send failure Slack message
         if: failure()
-        uses: slackapi/slack-github-action@v1.22.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: C02HYP398KS
           slack-message: |
@@ -135,7 +135,7 @@ jobs:
 
       - name: Send failure Slack message
         if: failure()
-        uses: slackapi/slack-github-action@v1.22.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: C02HYP398KS
           slack-message: |
@@ -150,7 +150,7 @@ jobs:
           SLACK_BOT_TOKEN: \${{ secrets.SLACK_BOT_TOKEN }}
 
       - name: Send successful Slack message
-        uses: slackapi/slack-github-action@v1.22.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: C02HYP398KS
           slack-message: |

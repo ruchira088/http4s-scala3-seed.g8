@@ -15,7 +15,7 @@
     - name: Render K8s resource files
       import_tasks: tasks/k8s-resource-files.yml
       vars:
-        domain: $name;format="normalize"$.dev.ruchij.com
+        domain: $name;format="normalize"$.home.ruchij.com
         hostname: "{{ domain if git_branch == 'main' or git_branch == 'master' else git_branch + '.' + domain }}"
         ghcr_credentials: "{{ lookup('aws_ssm', '/github/ghcr/docker-config', region='ap-southeast-2') }}"
 

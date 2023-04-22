@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "3.2.1"
+  val ScalaVersion = "3.2.2"
   val Http4sVersion = "0.23.18"
   val CirceVersion = "0.14.5"
 

@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "3.3.0"
-  val Http4sVersion = "0.23.19"
+  val Http4sVersion = "0.23.22"
   val CirceVersion = "0.14.5"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
@@ -22,7 +22,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.4"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.7"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.8"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 

@@ -4,7 +4,7 @@ object Dependencies
 {
   val ScalaVersion = "3.3.0"
   val Http4sVersion = "0.23.23"
-  val CirceVersion = "0.14.5"
+  val CirceVersion = "0.14.6"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -26,7 +26,7 @@ object Dependencies
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.16"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.17"
 
   lazy val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-6" % "3.2.15.0"
 

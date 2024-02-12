@@ -18,7 +18,7 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.12.6"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.12.7"
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.5"
 
@@ -26,7 +26,7 @@ object Dependencies
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.17"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.18"
 
   lazy val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-6" % "3.2.15.0"
 

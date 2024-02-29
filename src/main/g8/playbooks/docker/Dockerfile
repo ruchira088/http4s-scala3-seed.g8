@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jre
 
-LABEL org.opencontainers.image.source https://github.com/ruchira088/$name;format="normalize"$
+LABEL org.opencontainers.image.source=https://github.com/ruchira088/$name;format="normalize"$
 
 WORKDIR /opt/$name;format="normalize"$
 

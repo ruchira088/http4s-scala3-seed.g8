@@ -14,7 +14,7 @@ class CirceDecodersSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "return a failure when invalid input" in {
-    Decoder[DateTime].decodeJson(Json.fromString("invalid")) mustBe a[Left[_, _]]
+    Decoder[DateTime].decodeJson(Json.fromString("invalid")) mustBe a[Left[?, ?]]
   }
 
 }

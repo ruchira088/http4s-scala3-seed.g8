@@ -16,6 +16,6 @@ trait MockedRoutes[F[_]] extends MockitoSugar with OneInstancePerTest {  self: S
   val compression: Compression[F]
 
   def createRoutes: HttpApp[F] =
-    Routes[F](healthService)(sync, compression)
+    Routes[F](healthService)(using sync, compression)
 
 }

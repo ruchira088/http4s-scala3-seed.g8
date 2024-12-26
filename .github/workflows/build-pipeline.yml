@@ -1,4 +1,4 @@
-name: build pipeline
+name: http4s scala3 seed pipeline
 
 on:
   push:

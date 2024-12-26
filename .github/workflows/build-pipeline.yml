@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   compile-and-test:
+    name: Compile & Test
     runs-on: ubuntu-latest
 
     steps:
@@ -58,9 +59,14 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
   publish-docker-image:
+    name: Publish Docker image
     runs-on: ubuntu-latest
     needs:
       - compile-and-test
+
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -93,11 +99,15 @@ jobs:
       - name: Create new sbt project from g8 template
         run: sbt g8
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-southeast-2
+          role-session-name: backend-deploy
+          role-to-assume: "arn:aws:iam::365562660444:role/github_iam_role"
+
       - name: Build and publish Docker image
         run: ansible-playbook target/g8/playbooks/build-and-publish-docker-image.yml
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Send failure Slack message
         if: failure()
@@ -116,9 +126,14 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
   deploy-to-k8s:
+    name: Deploy to K8s
     runs-on: ubuntu-latest
     needs:
       - publish-docker-image
+
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -145,11 +160,15 @@ jobs:
       - name: Create new sbt project from g8 template
         run: sbt g8
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-southeast-2
+          role-session-name: backend-deploy
+          role-to-assume: "arn:aws:iam::365562660444:role/github_iam_role"
+
       - name: Deploy to K8s server
         run: ansible-playbook target/g8/playbooks/k8s-deploy.yml
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Send failure Slack message
         if: failure()

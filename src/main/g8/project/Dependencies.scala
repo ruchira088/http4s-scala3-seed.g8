@@ -2,9 +2,9 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "3.4.2"
-  val Http4sVersion = "0.23.30"
-  val CirceVersion = "0.14.10"
+  val ScalaVersion = "3.7.3"
+  val Http4sVersion = "0.23.32"
+  val CirceVersion = "0.14.15"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -18,11 +18,11 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.13.0"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.14.0"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.8"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % "0.17.9"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.16"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.20"
 
   lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 

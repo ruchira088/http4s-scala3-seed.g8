@@ -111,9 +111,7 @@ releaseProcess := Seq(
 )
 
 def runGitCommand(command: String): Option[String] = {
-  val gitFolder = new File(".git")
-
-  if (gitFolder.exists()) Try(command !!).toOption.map(_.trim).filter(_.nonEmpty) else None
+  Try(command !!).toOption.map(_.trim).filter(_.nonEmpty)
 }
 
 addCommandAlias("cleanCompile", "clean; compile;")
